@@ -1,7 +1,7 @@
 import './App.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { MainLayout } from './components/MainLayout/MainLayout'
-import { Projects } from './views/Projects/Projects'
+import Projects from './views/Projects/Projects'
 
 function App() {
 
@@ -9,6 +9,7 @@ function App() {
     {
       path: '/',
       element: <MainLayout />,
+      errorElement: <div>произошла ошибка...</div>,
       children: [
         {
           path: 'projects',

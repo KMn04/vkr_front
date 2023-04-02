@@ -1,39 +1,26 @@
 import { Card } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import './styles.css'
+import { useStores } from '../../hooks/useStores'
+import { observer } from 'mobx-react'
 
-const mockProjects = [{
-  id: 1,
-  name: 'Project1',
-  description: 'simple description'
-},{
-  id: 2,
-  name: 'Project2',
-  description: 'simple description'
-},{
-  id: 3,
-  name: 'Project3',
-  description: 'simple description'
-},{
-  id: 4,
-  name: 'Project4',
-  description: 'simple description'
-},{
-  id: 5,
-  name: 'Project5',
-  description: 'simple description'
-},]
+const Projects: React.FC = () => {
+  const {projectsStore} = useStores()
 
-
-export const Projects: React.FC = () => {
+  useEffect(() => {
+    projectsStore.fetchProjects()
+  }, [])
 
   return (
     <div className="Projects">
-      {mockProjects.map((project) => (
+      {projectsStore.projects.map((project) => (
         <Card key={project.id} title={project.name}>
           <p>{project.description}</p>
         </Card>
       ))}
+      {projectsStore.state.isLoading && (<span>loading...</span>)}
     </div>
   )
 }
+
+export default observer(Projects)
