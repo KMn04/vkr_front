@@ -3,3 +3,11 @@
   gap: 8px;
   display: flex;
 }
+
+.Projects__card {
+  cursor: pointer;
+}
+
+.Projects__card:hover {
+  background-color: #ebebeb;
+}

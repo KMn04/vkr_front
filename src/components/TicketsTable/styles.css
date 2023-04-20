@@ -1,0 +1,8 @@
+.TicketTable__idCell {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.TicketTable__idCell:hover {
+  color: rgb(71, 120, 255)
+}

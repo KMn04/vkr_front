@@ -11,9 +11,7 @@ export const MainLayout: React.FC<PropsWithChildren> = ({children}) => {
       <SideBar />
       <div className="MainLayout__content" >
         <Header />
-        <div>
-          <Outlet />
-        </div>
+        <Outlet />
       </div>
     </div> 
   )

@@ -1,9 +1,10 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { ErrorStateStore, FetchingStateStore, StateBaseStore, SuccessStateStore } from "./StateStores";
 import ProjectsService from "../services/ProjectsServices";
+import { IProjectListItem } from "../types/Projects";
 
 export class ProjectsStore {
-  projects: any[];
+  projects: IProjectListItem[];
 
   state: StateBaseStore;
 

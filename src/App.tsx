@@ -2,6 +2,7 @@ import './App.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { MainLayout } from './components/MainLayout/MainLayout'
 import Projects from './views/Projects/Projects'
+import ProjectPage from './views/Project/Project'
 
 function App() {
 
@@ -14,6 +15,10 @@ function App() {
         {
           path: 'projects',
           element: <Projects />
+        },
+        {
+          path: 'projects/:id',
+          element: <ProjectPage />
         }
       ]
     }

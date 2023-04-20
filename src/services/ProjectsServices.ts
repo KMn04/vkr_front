@@ -1,7 +1,8 @@
-import type { IProject } from '../types/Projects';
+import type { IProject, IProjectListItem } from '../types/Projects';
 import { ApiConnection } from './ApiConnection';
+import { mockTicketInProgress, mockTicketOpen } from './TicketsService'
 
-const mockProjects: IProject[] = [{
+const mockProjects: IProjectListItem[] = [{
   id: 1,
   name: 'Project1',
   description: 'simple description'
@@ -21,19 +22,36 @@ const mockProjects: IProject[] = [{
   id: 5,
   name: 'Project5',
   description: 'simple description'
-},]
+}]
 
+const mockProject: IProject = {
+  id: 2,
+  name: 'Project2',
+  description: 'simple description',
+  tickets: [
+    mockTicketInProgress,
+    mockTicketOpen
+  ],
+};
 
 class ProjectsService {
   static get RoutePrefix(): string {
     return 'Project';
   }
 
+  static async getProject(id: number): Promise<IProject> {
+    try {
+      const response = await ApiConnection.get(this.RoutePrefix + '/' + id);
+      return response.data;
+    } catch {
+      return mockProject;
+    }
+  }
+
   /**
    * Получение проектов с бэка
-   * @param query фильтр для получения проектов
   */
-  static async getProjects(): Promise<IProject[]> {
+  static async getProjects(): Promise<IProjectListItem[]> {
     try {
       const response = await ApiConnection.get(this.RoutePrefix);
 
