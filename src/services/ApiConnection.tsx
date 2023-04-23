@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getTokenFromLocalStorage } from './utils';
 
 export const ApiConnection = axios.create({
   baseURL: `localhost:3000`,
@@ -19,7 +20,7 @@ ApiConnection.interceptors.response.use((response) => {
 });
 
 const getToken = () => {
-  const token = localStorage.getItem('WorkNoteToken');
+  const token = getTokenFromLocalStorage();
 
   return token;
 };
@@ -27,8 +28,7 @@ const getToken = () => {
 ApiConnection.interceptors.request.use((config) => {
   const token = getToken();
   if (config.headers) {
-    // eslint-disable-next-line no-param-reassign
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = token;
   }
   return config;
 });

@@ -1,0 +1,28 @@
+.Login {
+  flex-grow: 1;
+  display: flex;
+}
+
+.Login__container {
+  margin: auto;
+  border-radius: 10%;
+  border: 1px solid rgb(206, 206, 206);
+  padding: 16px;
+  min-width: 320px;
+}
+
+.Login__submit {
+  display: flex;
+  margin: auto;
+}
+
+.Login__linkContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.Login__link {
+  text-decoration: none;
+  text-transform: lowercase;
+  font-weight: 400;
+}

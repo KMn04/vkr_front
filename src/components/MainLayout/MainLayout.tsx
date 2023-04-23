@@ -1,10 +1,24 @@
-import React, { PropsWithChildren } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import './styles.css'
 import { SideBar } from '../SideBar/Sidebar'
 import {Header} from '../Header/Header'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useStores } from '../../hooks/useStores'
 
-export const MainLayout: React.FC<PropsWithChildren> = ({children}) => {
+export const MainLayout: React.FC = (  ) => {
+
+  const {authStore} = useStores();
+  const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    if(!authStore.token){
+      try{
+        authStore.tryGetToken();
+      }catch{
+        navigate('/login')
+      }
+    }
+  }, [])
 
   return (
     <div className="MainLayout">
