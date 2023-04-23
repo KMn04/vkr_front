@@ -7,6 +7,10 @@ function App() {
 
   const router = createBrowserRouter([
     {
+      path: '/auth',
+      element: <div>authorization</div>
+    },
+    {
       path: '/',
       element: <MainLayout />,
       errorElement: <div>произошла ошибка...</div>,
