@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import './styles.css';
 import { useStores } from '../../hooks/useStores';
 import TicketsTable from '../../components/TicketsTable/TicketsTable';
@@ -27,6 +27,7 @@ const ProjectPage: React.FC = () => {
       <div className="ProjectPage__tickets">
         <TicketsTable tickets={projectStore.tickets}/>
       </div>
+      <Outlet />
     </div>
   )
 }

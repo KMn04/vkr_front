@@ -5,6 +5,9 @@ import Projects from './views/Projects/Projects'
 import ProjectPage from './views/Project/Project'
 import Register from './views/Register/Register'
 import Login from './views/Login/Login'
+import TicketModal from './views/TicketModal/TicketModal'
+import ReactDOM from 'react-dom'
+import { TicketModalContainer } from './views/TicketModal/TicketModalContainer'
 
 function App() {
 
@@ -28,7 +31,13 @@ function App() {
         },
         {
           path: 'projects/:id',
-          element: <ProjectPage />
+          element: <ProjectPage />,
+          children: [
+            {
+              path: 'ticket/:ticketId',
+              element: <TicketModal/>
+            }
+          ]
         }
       ]
     }
