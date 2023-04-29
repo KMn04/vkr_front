@@ -2,6 +2,7 @@
   padding: 16px;
   gap: 8px;
   display: flex;
+  flex-direction: column;
 }
 
 .Projects__card {

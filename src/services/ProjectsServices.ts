@@ -1,4 +1,4 @@
-import type { IProject, IProjectListItem } from '../types/Projects';
+import type { ICreateProjectRequest, IProject, IProjectListItem } from '../types/Projects';
 import { ApiConnection } from './ApiConnection';
 import { mockTicketInProgress, mockTicketOpen } from './TicketsService'
 
@@ -59,7 +59,17 @@ class ProjectsService {
     } catch {
       return mockProjects
     }
+  }
 
+  static async create(request: ICreateProjectRequest): Promise<{ id: number }> {
+    try {
+      const response = await ApiConnection.post(this.RoutePrefix + '/create')
+      return response.data;
+    } catch {
+      return {
+        id: 5
+      }
+    }
   }
 }
 

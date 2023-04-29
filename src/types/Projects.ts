@@ -12,3 +12,14 @@ export interface IProject {
   description: string;
   tickets: ITicket[];
 }
+
+export interface ICreateProjectForm {
+  title?: string;
+  description?: string;
+}
+
+
+export interface ICreateProjectRequest {
+  title: string;
+  description?: string;
+}
