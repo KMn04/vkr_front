@@ -3,7 +3,9 @@ import Modal from '../Modal/Modal';
 
 const TicketModal: React.FC = () => {
   return (
-    <Modal>
+    <Modal onClickOutside={() => {
+      history.back()
+    }}>
       <TicketModalContainer />
     </Modal>
   )

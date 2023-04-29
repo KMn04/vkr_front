@@ -1,17 +1,27 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './styles.css'
+import { useStores } from '../../hooks/useStores';
+import { TicketStatusName } from '../../types/Ticket';
 
 export const TicketModalContainer: React.FC = () => {
   const {ticketId} = useParams();
+  const {ticketStore} = useStores()
 
   useEffect(() => {
-    console.log(ticketId)
+    if(ticketId){
+      ticketStore.fetch(+ticketId)
+    }
   }, [])
 
   return (
     <div className="TicketModal">
-      lol
+      <div className="TicketModal__title">
+        {ticketStore.title}
+      </div>
+      <div className="TicketModal__status">
+        {ticketStore.status && TicketStatusName[ticketStore.status]}
+      </div>
     </div>
   );
 }

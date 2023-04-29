@@ -2,15 +2,17 @@ import { Table } from 'antd';
 import React, { useMemo } from 'react'
 import './styles.css'
 import { ITicket, TicketStatus, TicketStatusName } from '../../types/Ticket';
+import { useNavigate } from 'react-router-dom';
 
 export interface ITicketsTableProps {
   tickets: ITicket[];
 }
 
 const TicketsTable: React.FC<ITicketsTableProps> = ({tickets}) => {
+  const navigate = useNavigate();
 
   const onTicketIdClick = (id: number) => {
-    window.alert(`Clicked on ticket with id ${id}`)
+    navigate(`ticket/${id}`);
   }
 
   const columns = useMemo(() => [{
@@ -49,13 +51,8 @@ const TicketsTable: React.FC<ITicketsTableProps> = ({tickets}) => {
     }
   }], [])
 
-  const onRowClick = () => {
-
-  }
-
   return (
-    <Table 
-      onRow={onRowClick} 
+    <Table  
       columns={columns} 
       dataSource={tickets}
     />
