@@ -23,7 +23,7 @@ const Login: React.FC = () => {
     }
   }, [])
 
-  const handleSubmit = async (params: Required<ILoginForm>) => {
+  const handleSubmit = async (params: Required<ILoginForm>): Promise<void> => {
     setLocalError(undefined)
     console.log('why?', params)
     try{

@@ -17,7 +17,6 @@ const Register: React.FC = () => {
   
   const handleSubmit = async (params: Required<IRegistrationForm>) => {
     setLocalError(undefined)
-    console.log('sdfsdfsdf')
     try{
       const response = await RegistrationService.registration({
         login: params.login, 
