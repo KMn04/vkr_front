@@ -3,6 +3,7 @@
   gap: 8px;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .Projects__card {

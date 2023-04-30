@@ -6,8 +6,6 @@ import ProjectPage from './views/Project/Project'
 import Register from './views/Register/Register'
 import Login from './views/Login/Login'
 import TicketModal from './views/TicketModal/TicketModal'
-import ReactDOM from 'react-dom'
-import { TicketModalContainer } from './views/TicketModal/TicketModalContainer'
 
 function App() {
 
@@ -30,7 +28,7 @@ function App() {
           element: <Projects />
         },
         {
-          path: 'projects/:id',
+          path: 'projects/:projectId',
           element: <ProjectPage />,
           children: [
             {

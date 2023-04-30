@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import './styles.css'
 import { useStores } from '../../hooks/useStores';
 import { TicketStatusName } from '../../types/Ticket';
+import { observer } from 'mobx-react';
 
-export const TicketModalContainer: React.FC = () => {
+const TicketModalContainer: React.FC = () => {
   const {ticketId} = useParams();
   const {ticketStore} = useStores()
 
@@ -25,3 +26,5 @@ export const TicketModalContainer: React.FC = () => {
     </div>
   );
 }
+
+export default observer(TicketModalContainer)

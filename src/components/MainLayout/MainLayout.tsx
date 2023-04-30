@@ -1,6 +1,5 @@
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { useLayoutEffect } from 'react'
 import './styles.css'
-import { SideBar } from '../SideBar/Sidebar'
 import {Header} from '../Header/Header'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useStores } from '../../hooks/useStores'
@@ -22,9 +21,8 @@ export const MainLayout: React.FC = (  ) => {
 
   return (
     <div className="MainLayout">
-      <SideBar />
+      <Header />
       <div className="MainLayout__content" >
-        <Header />
         <Outlet />
       </div>
     </div> 

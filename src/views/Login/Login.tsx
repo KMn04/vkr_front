@@ -25,7 +25,6 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (params: Required<ILoginForm>): Promise<void> => {
     setLocalError(undefined)
-    console.log('why?', params)
     try{
       const response = await RegistrationService.login({
         login: params.login,

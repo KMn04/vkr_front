@@ -21,14 +21,10 @@ class TicketsService {
   }
 
   static async getTicket(id: number): Promise<ITicket> {
-    console.log('start')
     try {
-      console.log('start2')
       const response = await ApiConnection.get(this.RoutePrefix + '/' + id);
-      console.log('start3', response)
       return response.data;
     } catch (error) {
-      console.log(error)
       return mockTicketInProgress;
     }
   }
