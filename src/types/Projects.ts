@@ -23,3 +23,8 @@ export interface ICreateProjectRequest {
   title: string;
   description?: string;
 }
+
+export interface IProjectWikiPage {
+  id: number;
+  title: string;
+}

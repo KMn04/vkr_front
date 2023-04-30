@@ -1,7 +1,13 @@
 .WikiDirectory {
-  
+  max-width: 200px;
+  border-right: 1px solid rgb(238, 238, 238)
 }
 
 .WikiDirectory__title {
+  text-align: center;
   padding: 16px 16px 8px;
+}
+
+.WikiDirectory__addButton {
+  margin: 8px 16px;
 }

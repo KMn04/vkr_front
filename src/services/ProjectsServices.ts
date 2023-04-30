@@ -1,4 +1,4 @@
-import type { ICreateProjectRequest, IProject, IProjectListItem } from '../types/Projects';
+import type { ICreateProjectRequest, IProject, IProjectListItem, IProjectWikiPage } from '../types/Projects';
 import { ApiConnection } from './ApiConnection';
 import { mockTicketInProgress, mockTicketOpen } from './TicketsService'
 
@@ -63,7 +63,27 @@ class ProjectsService {
 
   static async create(request: ICreateProjectRequest): Promise<{ id: number }> {
     try {
-      const response = await ApiConnection.post(this.RoutePrefix + '/create')
+      const response = await ApiConnection.post(this.RoutePrefix + '/create', request)
+      return response.data;
+    } catch {
+      return {
+        id: 5
+      }
+    }
+  }
+
+  static async getWiki(projectId: number): Promise<IProjectWikiPage[]> {
+    try {
+      const response = await ApiConnection.get(`${this.RoutePrefix}/${projectId}/wiki`);
+      return response.data
+    } catch {
+      return []
+    }
+  }
+
+  static async createWikiPage(projectId: number, request: { title: string }): Promise<{ id: number }> {
+    try {
+      const response = await ApiConnection.post(`${this.RoutePrefix}/${projectId}/wiki`, request)
       return response.data;
     } catch {
       return {
