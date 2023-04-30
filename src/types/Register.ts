@@ -4,5 +4,7 @@ export interface IAuthResponse {
 
 export interface IAuthRequest {
   login: string,
-  password: string
+  password: string,
+  firstName: string,
+  email: string,
 }

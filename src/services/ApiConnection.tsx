@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getTokenFromLocalStorage } from './utils';
 
 export const ApiConnection = axios.create({
-  baseURL: `http:localhost:3000`,
+  baseURL: `http://localhost:3000`,
   headers: {
     'Cache-Control': 'no-cache',
     'Access-Control-Allow-Origin': '*',
