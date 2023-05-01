@@ -7,6 +7,8 @@ import Register from './views/Register/Register'
 import Login from './views/Login/Login'
 import TicketModal from './views/TicketModal/TicketModal'
 import ProjectAdministration from './components/ProjectAdministration/ProjectAdministration'
+import ProjectLayout from './components/Projectlayout/ProjectLayout'
+import ProjectWikiPage from './views/ProjectWikiPage/ProjectWikiPage'
 
 function App() {
 
@@ -30,14 +32,23 @@ function App() {
         },
         {
           path: 'projects/:projectId',
-          element: <ProjectPage />,
+          element: <ProjectLayout />,
           children: [
             {
-              path: 'ticket/:ticketId',
-              element: <TicketModal/>
+              path: '',
+              element: <ProjectPage />,
+              children: [
+                {
+                  path: 'ticket/:ticketId',
+                  element: <TicketModal/>
+                },{
+                  path: 'administration',
+                  element: <ProjectAdministration/>
+                }
+              ]
             },{
-              path: 'administration',
-              element: <ProjectAdministration/>
+              path: 'wiki/:wikiPageId',
+              element: <ProjectWikiPage />
             }
           ]
         }

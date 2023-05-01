@@ -5,6 +5,7 @@ import { useStores } from '../../hooks/useStores';
 import Modal from '../../views/Modal/Modal';
 import CreateWikiPage from '../CreateWikiPage/CreateWikiPage';
 import { observer } from 'mobx-react';
+import { useNavigate } from 'react-router-dom';
 
 interface WikiDirectoryProps {
   projectId: number
@@ -13,6 +14,7 @@ interface WikiDirectoryProps {
 const WikiDirectory: React.FC<WikiDirectoryProps> = ({projectId}) => {
   const {projectWikiStore} = useStores();
   const [isShowAddPage, setShowAddPage] = useState(false);
+  const navigate = useNavigate();
 
   const openCreateFormHandle = () => {
     setShowAddPage(true)
@@ -41,7 +43,12 @@ const WikiDirectory: React.FC<WikiDirectoryProps> = ({projectId}) => {
       </Button>
       <div className="WikiDirectory__pages">
         {projectWikiStore.pages.map((page) => (
-          <div className="WikiDirectory__page">
+          <div 
+            className="WikiDirectory__page" 
+            onClick={() => {
+              navigate(`wiki/${page.id}`)
+            }}
+          >
             {page.title}
           </div>
         ))}

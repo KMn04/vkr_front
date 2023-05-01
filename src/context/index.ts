@@ -4,6 +4,7 @@ import { ProjectStore } from '../stores/projectStore'
 import { AuthStore } from '../stores/authStore';
 import { TicketStore } from '../stores/ticketStore';
 import { ProjectWikiStore } from '../stores/projectWikiStore';
+import { ProjectWikiPageStore } from '../stores/projectWikiPageStore';
 
 export const storeContext = React.createContext({
   authStore: new AuthStore(),
@@ -11,4 +12,5 @@ export const storeContext = React.createContext({
   projectStore: new ProjectStore(),
   ticketStore: new TicketStore(),
   projectWikiStore: new ProjectWikiStore(),
+  projectWikiPageStore: new ProjectWikiPageStore(),
 });

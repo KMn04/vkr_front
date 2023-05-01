@@ -28,8 +28,7 @@ const ProjectPage: React.FC = () => {
   }
 
   return (
-    <div className="ProjectPage">  
-      <WikiDirectory projectId={projectStore.id ?? 0}/> 
+    <div className="ProjectPage"> 
       <div className="ProjectPage__container">
         <div className="ProjectPage__toolbar">
           <div 

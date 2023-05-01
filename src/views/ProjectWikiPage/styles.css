@@ -1,0 +1,21 @@
+.ProjectWikiPage {
+  flex: 1;
+}
+
+.ProjectWikiPage__toolbar{
+  display: flex;
+  padding: 8px 16px;
+  justify-content: space-between;
+}
+
+.ProjectWikiPage__editor, .ProjectWikiPage__markdown {
+  padding: 8px 16px;
+}
+
+.ProjectWikiPage__editor {
+  flex: 1;
+}
+
+.ProjectWikiPage__title {
+  font-size: 24px;
+}

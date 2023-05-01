@@ -77,7 +77,23 @@ class ProjectsService {
       const response = await ApiConnection.get(`${this.RoutePrefix}/${projectId}/wiki`);
       return response.data
     } catch {
-      return []
+      return [{
+        id: 14,
+        title: 'BaSe',
+      }]
+    }
+  }
+
+  static async getWikiPage(projectId: number, wikiPageId: number): Promise<IProjectWikiPage> {
+    try {
+      const response = await ApiConnection.get(`${this.RoutePrefix}/${projectId}/wiki/${wikiPageId}`);
+      return response.data
+    } catch {
+      return {
+        id: 14,
+        title: 'BaSe',
+        content: 'Контент'
+      }
     }
   }
 

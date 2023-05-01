@@ -27,6 +27,7 @@ export interface ICreateProjectRequest {
 export interface IProjectWikiPage {
   id: number;
   title: string;
+  content?: string;
 }
 
 export interface IProjectEmployee {
