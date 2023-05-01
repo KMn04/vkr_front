@@ -6,6 +6,7 @@ import ProjectPage from './views/Project/Project'
 import Register from './views/Register/Register'
 import Login from './views/Login/Login'
 import TicketModal from './views/TicketModal/TicketModal'
+import ProjectAdministration from './components/ProjectAdministration/ProjectAdministration'
 
 function App() {
 
@@ -34,6 +35,9 @@ function App() {
             {
               path: 'ticket/:ticketId',
               element: <TicketModal/>
+            },{
+              path: 'administration',
+              element: <ProjectAdministration/>
             }
           ]
         }

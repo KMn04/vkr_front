@@ -1,13 +1,15 @@
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import './styles.css';
 import { useStores } from '../../hooks/useStores';
 import TicketsTable from '../../components/TicketsTable/TicketsTable';
 import WikiDirectory from '../../components/WikiDirectory/WikiDirectory';
+import {AiOutlineLeft} from 'react-icons/ai'
 
 const ProjectPage: React.FC = () => {
   const {projectStore} = useStores();
+  const navigate = useNavigate();
   const {projectId} = useParams();
 
   useEffect(() => {
@@ -17,10 +19,30 @@ const ProjectPage: React.FC = () => {
     }
   }, [])
 
+  const goBackhandle = () => {
+    navigate('/projects')
+  }
+
+  const goAdminHandle = () => {
+    navigate('administration')
+  }
+
   return (
     <div className="ProjectPage">  
       <WikiDirectory projectId={projectStore.id ?? 0}/> 
       <div className="ProjectPage__container">
+        <div className="ProjectPage__toolbar">
+          <div 
+            className="ProjectPage__toolbarItem ProjectPage__goBack" 
+            onClick={goBackhandle}
+          >
+            <AiOutlineLeft size={14} />
+            <span>назад</span>
+          </div>
+          <div className="ProjectPage__toolbarItem ProjectPage__administration" onClick={goAdminHandle}>
+            <span>администрирование</span>
+          </div>
+        </div>
         <div className="ProjectPage__title">
           {projectStore.name}
         </div>

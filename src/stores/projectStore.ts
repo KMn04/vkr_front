@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { ErrorStateStore, FetchingStateStore, StateBaseStore, SuccessStateStore } from "./StateStores";
 import ProjectsService from "../services/ProjectsServices";
 import { ITicket } from "../types/Ticket";
+import { IProjectEmployee } from "../types/Projects";
 
 export class ProjectStore {
   id?: number;
@@ -10,6 +11,8 @@ export class ProjectStore {
 
   description?: string;
 
+  employees: IProjectEmployee[]
+
   tickets: ITicket[];
 
   state: StateBaseStore;
@@ -17,6 +20,7 @@ export class ProjectStore {
   constructor() {
     makeAutoObservable(this);
     this.tickets = [];
+    this.employees = [];
     this.state = new StateBaseStore()
   }
 
@@ -41,5 +45,12 @@ export class ProjectStore {
     } catch (error) {
       this.state = new ErrorStateStore(error)
     }
+  }
+
+  get preparedUsers() {
+    return this.employees.map(employee => ({
+      userName: [employee.firstName, employee.secondName].join(' '),
+      role: employee.role
+    }))
   }
 }

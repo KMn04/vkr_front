@@ -28,3 +28,10 @@ export interface IProjectWikiPage {
   id: number;
   title: string;
 }
+
+export interface IProjectEmployee {
+  userId: number;
+  firstName: string;
+  secondName: string;
+  role: string;
+}

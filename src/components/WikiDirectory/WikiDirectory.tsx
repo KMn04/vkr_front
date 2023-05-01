@@ -24,7 +24,7 @@ const WikiDirectory: React.FC<WikiDirectoryProps> = ({projectId}) => {
 
   useEffect(() => {
     projectWikiStore.fetch(projectId)
-  }, [])
+  }, [projectId])
 
   if(!projectWikiStore.projectId){
     return (<div>А какой номер проекта?</div>)
