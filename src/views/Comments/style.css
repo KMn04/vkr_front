@@ -1,0 +1,15 @@
+.Projects {
+    padding: 16px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.Projects__card {
+    cursor: pointer;
+}
+
+.Projects__card:hover {
+    background-color: #ebebeb;
+}

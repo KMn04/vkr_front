@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+\import React, { useEffect, useState } from 'react';
 import { useStores } from '../../hooks/useStores';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
