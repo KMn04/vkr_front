@@ -20,7 +20,7 @@ const ProjectAdministrationContainer: React.FC = () => {
     <div className="ProjectAdministration">
       <div className="ProjectAdministration__toolbar">
         <div className="ProjectAdministration__title">
-          {projectStore.name}
+          Проект: {projectStore.name}
         </div>
         <Button className="ProjectAdministration__addUser">
           Добавить пользователя

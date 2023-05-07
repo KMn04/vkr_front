@@ -15,6 +15,10 @@ const TicketModalContainer: React.FC = () => {
     }
   }, [])
 
+  if(ticketStore.state.isLoading){
+    return <span>Загрузка задачи...</span>
+  }
+
   return (
     <div className="TicketModal">
       <div className="TicketModal__title">

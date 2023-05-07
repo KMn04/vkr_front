@@ -9,7 +9,11 @@ export class ProjectWikiPageStore {
 
   title?: string;
 
+  tempTitle?: string;
+
   content?: string;
+
+  tempContent?: string;
 
   state: StateBaseStore;
 
@@ -35,7 +39,9 @@ export class ProjectWikiPageStore {
         const response = await ProjectsService.getWikiPage(this.projectId, this.wikiPageId);
         runInAction(() => {
           this.title = response.title;
+          this.tempTitle = this.title;
           this.content = response.content;
+          this.tempContent = this.content;
           this.state = new SuccessStateStore();
         })
       }

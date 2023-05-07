@@ -1,5 +1,5 @@
 import './App.css'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, redirect } from 'react-router-dom'
 import { MainLayout } from './components/MainLayout/MainLayout'
 import Projects from './views/Projects/Projects'
 import ProjectPage from './views/Project/Project'
@@ -26,6 +26,12 @@ function App() {
       element: <MainLayout />,
       errorElement: <div>произошла ошибка...</div>,
       children: [
+        {
+          path: '/',
+          loader: () => { 
+            return redirect('projects')
+          }
+        },
         {
           path: 'projects',
           element: <Projects />
