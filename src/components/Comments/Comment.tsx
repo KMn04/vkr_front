@@ -15,7 +15,7 @@ const Comment: React.FC<CommentProps> = ({onClose}) => {
     const handleSubmit = async (params: Required<ICreateCommentForm>) => { // заменить
         setLocalError(undefined)
         try{
-            await CommentService.create({
+            await CommentsService.create({
                 content: params.content // текст коммента
             })
             if(onClose){
