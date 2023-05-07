@@ -4,7 +4,6 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import './styles.css';
 import { useStores } from '../../hooks/useStores';
 import TicketsTable from '../../components/TicketsTable/TicketsTable';
-import WikiDirectory from '../../components/WikiDirectory/WikiDirectory';
 import {AiOutlineLeft} from 'react-icons/ai'
 
 const ProjectPage: React.FC = () => {
@@ -25,6 +24,10 @@ const ProjectPage: React.FC = () => {
 
   const goAdminHandle = () => {
     navigate('administration')
+  }
+
+  if(projectStore.state.isLoading){
+    return <span>Загрузка проекта...</span>
   }
 
   return (

@@ -4,6 +4,7 @@ import './styles.css'
 import { useStores } from '../../hooks/useStores';
 import { TicketStatusName } from '../../types/Ticket';
 import { observer } from 'mobx-react';
+import Comment from '../../components/Comments/Comment';
 
 const TicketModalContainer: React.FC = () => {
   const {ticketId} = useParams();
@@ -15,6 +16,10 @@ const TicketModalContainer: React.FC = () => {
     }
   }, [])
 
+  if(ticketStore.state.isLoading){
+    return <span>Загрузка задачи...</span>
+  }
+
   return (
     <div className="TicketModal">
       <div className="TicketModal__title">
@@ -22,6 +27,9 @@ const TicketModalContainer: React.FC = () => {
       </div>
       <div className="TicketModal__status">
         {ticketStore.status && TicketStatusName[ticketStore.status]}
+      </div>
+      <div className="TicketModal__comments">
+        <Comment/>
       </div>
     </div>
   );
