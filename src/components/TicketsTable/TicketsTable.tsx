@@ -1,19 +1,25 @@
 import { Table } from 'antd';
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import './styles.css'
 import { ITicket, TicketStatus, TicketStatusName } from '../../types/Ticket';
 import { useNavigate } from 'react-router-dom';
 
 export interface ITicketsTableProps {
-  tickets: ITicket[];
+  projectId: number
 }
 
-const TicketsTable: React.FC<ITicketsTableProps> = ({tickets}) => {
+const TicketsTable: React.FC<ITicketsTableProps> = ({projectId}) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(projectId)
+  }, [])
 
   const onTicketIdClick = (id: number) => {
     navigate(`ticket/${id}`);
   }
+
+  const tickets: ITicket[] = []
 
   const columns = useMemo(() => [{
     title: '№',

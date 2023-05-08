@@ -12,7 +12,7 @@ class RegistrationService {
   }
 
   static async login(request: IAuthRequest): Promise<IAuthResponse> {
-    const response = await ApiConnection.post(`${this.RoutePrefix}/login`, request);
+    const response = await ApiConnection.post(`/login`, request);
     return response.data
   }
 }

@@ -3,40 +3,45 @@ import { ApiConnection } from './ApiConnection';
 import { mockTicketInProgress, mockTicketOpen } from './TicketsService'
 
 const mockProjects: IProjectListItem[] = [{
-  id: 1,
+  projectId: 1,
   name: 'Project1',
   description: 'simple description'
 }, {
-  id: 2,
+  projectId: 2,
   name: 'Project2',
   description: 'simple description'
 }, {
-  id: 3,
+  projectId: 3,
   name: 'Project3',
   description: 'simple description'
 }, {
-  id: 4,
+  projectId: 4,
   name: 'Project4',
   description: 'simple description'
 }, {
-  id: 5,
+  projectId: 5,
   name: 'Project5',
   description: 'simple description'
 }]
 
 const mockProject: IProject = {
-  id: 2,
-  name: 'Project2',
-  description: 'simple description',
-  tickets: [
-    mockTicketInProgress,
-    mockTicketOpen
-  ],
+  budget: undefined,
+  currencyCode: undefined,
+  dateFinish: undefined,
+  dateStart: undefined,
+  description: "simple description",
+  name: "projectPipka",
+  ownerId: 2,
+  projectId: 3,
+  roleCode: 1,
+  statusCode: 1,
+  sumHoursFact: undefined,
+  sumHoursPlan: undefined
 };
 
 class ProjectsService {
   static get RoutePrefix(): string {
-    return 'Project';
+    return 'projects';
   }
 
   static async getProject(id: number): Promise<IProject> {
