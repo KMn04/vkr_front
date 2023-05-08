@@ -1,16 +1,24 @@
 import type { ITicket } from "./Ticket";
 
 export interface IProjectListItem {
-  id: number;
+  projectId: number;
   name: string;
   description: string;
 }
 
 export interface IProject {
-  id: number;
+  projectId: number;
   name: string;
   description: string;
-  tickets: ITicket[];
+  budget?: string;
+  currencyCode?: number;
+  dateFinish?: string;
+  dateStart?: string;
+  ownerId: number;
+  roleCode: number;
+  statusCode: number;
+  sumHoursFact?: number;
+  sumHoursPlan?: number;
 }
 
 export interface ICreateProjectForm {

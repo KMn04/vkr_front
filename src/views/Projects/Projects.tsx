@@ -32,10 +32,10 @@ const Projects: React.FC = () => {
       {projectsStore.projects.map((project) => (
         <Card 
           className="Projects__card" 
-          key={project.id} 
+          key={project.projectId} 
           title={project.name}
           onClick={() => {
-            navigate(`${project.id}`)
+            navigate(`${project.projectId}`)
           }}
         >
           <p>{project.description}</p>

@@ -11,16 +11,12 @@ export class ProjectStore {
 
   description?: string;
 
-  employees: IProjectEmployee[]
-
-  tickets: ITicket[];
+  statusCode?: number;
 
   state: StateBaseStore;
 
   constructor() {
     makeAutoObservable(this);
-    this.tickets = [];
-    this.employees = [];
     this.state = new StateBaseStore()
   }
 
@@ -35,22 +31,15 @@ export class ProjectStore {
       if (this.id) {
         const response = await ProjectsService.getProject(this.id);
         runInAction(() => {
-          this.id = response.id
-          this.name = response.name;
+          this.id = response.projectId,
+            this.name = response.name;
           this.description = response.description;
-          this.tickets = response.tickets ?? [];
+          this.statusCode = response.statusCode;
           this.state = new SuccessStateStore();
         })
       }
     } catch (error) {
       this.state = new ErrorStateStore(error)
     }
-  }
-
-  get preparedUsers() {
-    return this.employees.map(employee => ({
-      userName: [employee.firstName, employee.secondName].join(' '),
-      role: employee.role
-    }))
   }
 }

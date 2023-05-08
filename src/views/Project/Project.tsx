@@ -26,7 +26,7 @@ const ProjectPage: React.FC = () => {
     navigate('administration')
   }
 
-  if(projectStore.state.isLoading){
+  if(projectStore.state.isLoading || !projectStore.id){
     return <span>Загрузка проекта...</span>
   }
 
@@ -52,7 +52,7 @@ const ProjectPage: React.FC = () => {
           {projectStore.description}
         </div>
         <div className="ProjectPage__tickets">
-          <TicketsTable tickets={projectStore.tickets}/>
+          <TicketsTable projectId={projectStore.id}/>
         </div>
         <Outlet />
       </div>
