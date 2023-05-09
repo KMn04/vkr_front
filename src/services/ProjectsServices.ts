@@ -1,4 +1,5 @@
-import type { ICreateProjectRequest, IProject, IProjectListItem, IProjectMember, IProjectUpdate, IProjectWikiPage } from '../types/Projects';
+import { ICreateTask } from '../components/CreateTask/CreateTask';
+import type { ICreateProjectRequest, IProject, IProjectListItem, IProjectMember, IProjectTask, IProjectUpdate, IProjectWikiPage } from '../types/Projects';
 import { ApiConnection } from './ApiConnection';
 
 const mockProjects: IProjectListItem[] = [{
@@ -58,6 +59,16 @@ class ProjectsService {
     return response.data;
   }
 
+  static async getProjectTasks(id: number): Promise<IProjectTask[]> {
+    const response = await ApiConnection.get(`${this.RoutePrefix}/${id}/tasks`);
+    return response.data;
+  }
+
+  static async getProjectTask(projectId: number, taskId: number): Promise<IProjectTask> {
+    const response = await ApiConnection.get(`${this.RoutePrefix}/${projectId}/tasks/${taskId}`);
+    return response.data;
+  }
+
 
   /**
    * Получение проектов с бэка
@@ -81,6 +92,15 @@ class ProjectsService {
         id: 5
       }
     }
+  }
+
+  static async createTask(projectId: number, request: ICreateTask): Promise<void> {
+    await ApiConnection.post(`${this.RoutePrefix}/${projectId}/tasks`, {
+      ...request,
+      typeCode: 1,
+      priorityCode: 1,
+
+    })
   }
 
   static async update(projectId: number, values: IProjectUpdate): Promise<void> {

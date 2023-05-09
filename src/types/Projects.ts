@@ -60,6 +60,25 @@ export interface IProjectMember {
   roleName: string
 }
 
+export interface IProjectTask {
+  taskId: number;
+  name: string;
+  description?: string;
+  authorId: number;
+  asigneeId: number;
+  supervizorId: number;
+  dateFinishFact?: string;
+  dateFinishPlan?: string;
+  dateStartPlan?: string;
+  dateStartFact?: string;
+  priorityCode: number;
+  typeCode: number;
+  statusCode: number;
+  sprintId?: number;
+  sumHoursFact?: number;
+  sumHoursPlan?: number;
+}
+
 export interface IProjectUpdate {
   name: string,
   description: string

@@ -5,6 +5,7 @@
 .ProjectTickets__toolbar{
   padding: 8px;
   display: flex;
+  gap: 8px
 }
 
 .ProjectTickets__toolbarItem {

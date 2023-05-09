@@ -1,52 +1,44 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { ErrorStateStore, FetchingStateStore, StateBaseStore, SuccessStateStore } from "./StateStores";
 import ProjectsService from "../services/ProjectsServices";
+import { IProjectTask } from "../types/Projects";
 
-export class TicketStore {
-  id?: number;
-
+export class ProjectTasksStore {
   projectId?: number;
 
-  name?: string;
-
-  statusCode?: number;
-
-  authorId?: number;
-
-  authorName?: string;
+  tasks: IProjectTask[];
 
   state: StateBaseStore;
 
   constructor() {
     makeAutoObservable(this);
+    this.tasks = [];
     this.state = new StateBaseStore()
   }
 
-  async fetch(projectId: number, id?: number) {
+  async fetch(id?: number) {
     this.state = new FetchingStateStore();
     try {
       if (id) {
         runInAction(() => {
-          this.id = id;
+          this.projectId = id;
         })
       }
-      if (projectId) {
+      if (this.projectId) {
+        const response = await ProjectsService.getProjectTasks(this.projectId);
         runInAction(() => {
-          this.projectId = projectId
-        })
-      }
-      if (this.id && this.projectId) {
-        const response = await ProjectsService.getProjectTask(this.projectId, this.id);
-        runInAction(() => {
-          this.id = response.taskId;
-          this.name = response.name;
-          this.statusCode = response.statusCode;
-          this.authorId = response.authorId;
+          this.tasks = response;
           this.state = new SuccessStateStore();
         })
       }
     } catch (error) {
       this.state = new ErrorStateStore(error)
     }
+  }
+
+  get preparedTasks() {
+    return this.tasks.map((task) => ({
+      ...task,
+    }))
   }
 }

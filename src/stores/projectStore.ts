@@ -3,6 +3,7 @@ import { ErrorStateStore, FetchingStateStore, StateBaseStore, SuccessStateStore 
 import ProjectsService from "../services/ProjectsServices";
 import { ProjectMembersStore } from "./ProjectMembersStore";
 import { IProjectUpdate } from "../types/Projects";
+import { ProjectTasksStore } from "./projectTasksStore";
 
 export class ProjectStore {
   id?: number;
@@ -15,11 +16,14 @@ export class ProjectStore {
 
   projectMembers: ProjectMembersStore;
 
+  projectTasks: ProjectTasksStore;
+
   state: StateBaseStore;
 
   constructor() {
     makeAutoObservable(this);
-    this.projectMembers = new ProjectMembersStore()
+    this.projectMembers = new ProjectMembersStore();
+    this.projectTasks = new ProjectTasksStore();
     this.state = new StateBaseStore()
   }
 
@@ -41,6 +45,7 @@ export class ProjectStore {
           this.state = new SuccessStateStore();
         })
         this.projectMembers.fetch(this.id)
+        this.projectTasks?.fetch(this.id)
       }
     } catch (error) {
       this.state = new ErrorStateStore(error)

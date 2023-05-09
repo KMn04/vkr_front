@@ -62,7 +62,7 @@ function App() {
               element: <ProjectTickets />,
               children: [
                 {
-                  path: ':ticketId',
+                  path: 'ticket/:ticketId',
                   element: <TicketModal/>
                 }
               ]
