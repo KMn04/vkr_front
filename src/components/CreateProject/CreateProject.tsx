@@ -5,22 +5,22 @@ import { ICreateProjectForm } from "../../types/Projects"
 import './styles.css'
 
 export interface CreateProjectProps {
-  onClose?: () => void
+  onClose: () => void,
+  onSuccess: () => void,
 }
 
-const CreateProject: React.FC<CreateProjectProps> = ({onClose}) => {
+const CreateProject: React.FC<CreateProjectProps> = ({onClose, onSuccess}) => {
 
   const [localError, setLocalError] = useState<string>()
   const handleSubmit = async (params: Required<ICreateProjectForm>) => {
     setLocalError(undefined)
     try{
       await ProjectsService.create({
-        title: params.title,
+        name: params.title,
         description: params.description
       })
-      if(onClose){
-        onClose()
-      }
+      onSuccess();
+      onClose();
     }catch{
       setLocalError('Произошла ошибка подключения')
     }

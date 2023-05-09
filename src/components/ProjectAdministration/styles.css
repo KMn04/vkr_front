@@ -4,3 +4,20 @@
   justify-content: space-between;
   margin-bottom: 4px;
 }
+
+.ProjectAdministration__tasks{
+  display: flex;
+  flex-direction: column;
+}
+
+.ProjectAdministration__submit{
+  display: flex;
+  margin: auto;
+}
+
+.ProjectAdministration__editForm{
+  margin-bottom: 16px;
+}
+.ProjectAdministration__editForm .ant-form-item {
+  margin-bottom: 8px;
+}

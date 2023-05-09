@@ -1,0 +1,18 @@
+.ProjectTickets{
+  flex: 1
+}
+
+.ProjectTickets__toolbar{
+  padding: 8px;
+  display: flex;
+}
+
+.ProjectTickets__toolbarItem {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 16px;
+  border: 1px solid #aeaeae
+}

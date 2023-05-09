@@ -6,8 +6,16 @@
   flex-grow: 1;
 }
 
+.Projects__list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px
+}
+
 .Projects__card {
   cursor: pointer;
+  max-width: 20%;
+  flex: 1
 }
 
 .Projects__card:hover {

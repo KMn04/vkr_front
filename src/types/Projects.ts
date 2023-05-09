@@ -28,7 +28,7 @@ export interface ICreateProjectForm {
 
 
 export interface ICreateProjectRequest {
-  title: string;
+  name: string;
   description?: string;
 }
 
@@ -43,4 +43,24 @@ export interface IProjectEmployee {
   firstName: string;
   secondName: string;
   role: string;
+}
+
+export interface IProjectMemberUser {
+  userId: number;
+  firstName: string;
+  secondName: string;
+  login: string;
+  email: string;
+}
+
+export interface IProjectMember {
+  userId: number;
+  user: IProjectMemberUser;
+  roleCode: number;
+  roleName: string
+}
+
+export interface IProjectUpdate {
+  name: string,
+  description: string
 }

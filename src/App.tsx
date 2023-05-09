@@ -9,6 +9,8 @@ import TicketModal from './views/TicketModal/TicketModal'
 import ProjectAdministration from './components/ProjectAdministration/ProjectAdministration'
 import ProjectLayout from './components/Projectlayout/ProjectLayout'
 import ProjectWikiPage from './views/ProjectWikiPage/ProjectWikiPage'
+import ProjectTickets from './views/ProjectTickets/ProjectTickets'
+import Cabinet from './views/Cabinet/Cabinet'
 
 function App() {
 
@@ -55,8 +57,20 @@ function App() {
             },{
               path: 'wiki/:wikiPageId',
               element: <ProjectWikiPage />
+            },{
+              path: 'tasks',
+              element: <ProjectTickets />,
+              children: [
+                {
+                  path: ':ticketId',
+                  element: <TicketModal/>
+                }
+              ]
             }
           ]
+        },{
+          path: 'cabinet',
+          element: <Cabinet />
         }
       ]
     }

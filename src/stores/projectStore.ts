@@ -1,8 +1,8 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { ErrorStateStore, FetchingStateStore, StateBaseStore, SuccessStateStore } from "./StateStores";
 import ProjectsService from "../services/ProjectsServices";
-import { ITicket } from "../types/Ticket";
-import { IProjectEmployee } from "../types/Projects";
+import { ProjectMembersStore } from "./ProjectMembersStore";
+import { IProjectUpdate } from "../types/Projects";
 
 export class ProjectStore {
   id?: number;
@@ -13,10 +13,13 @@ export class ProjectStore {
 
   statusCode?: number;
 
+  projectMembers: ProjectMembersStore;
+
   state: StateBaseStore;
 
   constructor() {
     makeAutoObservable(this);
+    this.projectMembers = new ProjectMembersStore()
     this.state = new StateBaseStore()
   }
 
@@ -37,9 +40,16 @@ export class ProjectStore {
           this.statusCode = response.statusCode;
           this.state = new SuccessStateStore();
         })
+        this.projectMembers.fetch(this.id)
       }
     } catch (error) {
       this.state = new ErrorStateStore(error)
+    }
+  }
+
+  async update(values: IProjectUpdate) {
+    if (this.id) {
+      await ProjectsService.update(this.id, values)
     }
   }
 }

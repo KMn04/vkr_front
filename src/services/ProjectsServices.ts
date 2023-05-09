@@ -1,6 +1,5 @@
-import type { ICreateProjectRequest, IProject, IProjectListItem, IProjectWikiPage } from '../types/Projects';
+import type { ICreateProjectRequest, IProject, IProjectListItem, IProjectMember, IProjectUpdate, IProjectWikiPage } from '../types/Projects';
 import { ApiConnection } from './ApiConnection';
-import { mockTicketInProgress, mockTicketOpen } from './TicketsService'
 
 const mockProjects: IProjectListItem[] = [{
   projectId: 1,
@@ -53,6 +52,13 @@ class ProjectsService {
     }
   }
 
+
+  static async getProjectMembers(id: number): Promise<IProjectMember[]> {
+    const response = await ApiConnection.get(`${this.RoutePrefix}/${id}/members`);
+    return response.data;
+  }
+
+
   /**
    * Получение проектов с бэка
   */
@@ -68,13 +74,17 @@ class ProjectsService {
 
   static async create(request: ICreateProjectRequest): Promise<{ id: number }> {
     try {
-      const response = await ApiConnection.post(this.RoutePrefix + '/create', request)
+      const response = await ApiConnection.post(this.RoutePrefix, request)
       return response.data;
     } catch {
       return {
         id: 5
       }
     }
+  }
+
+  static async update(projectId: number, values: IProjectUpdate): Promise<void> {
+    await ApiConnection.put(`${this.RoutePrefix}/${projectId}`, values)
   }
 
   static async getWiki(projectId: number): Promise<IProjectWikiPage[]> {

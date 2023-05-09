@@ -1,0 +1,27 @@
+.Cabinet{
+  flex: 1;
+  padding: 16px 24px;
+}
+
+.Cabinet__toolbar{
+  margin-bottom: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.Cabinet__infoForm{
+  max-width: 60%;
+  margin-bottom: 16px;
+}
+
+.Cabinet__systemInfo {
+  max-width: 60%;
+}
+
+.Cabinet__systemInfoRow .ant-form-item-control-input-content{
+  display: flex;
+  justify-content: space-between;
+}
+.Cabinet__systemInfoRow .ant-input {
+  max-width: 60%;
+}
