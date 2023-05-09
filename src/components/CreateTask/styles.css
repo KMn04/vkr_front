@@ -1,0 +1,9 @@
+
+.CreateTask__form .ant-form-item {
+  margin-bottom: 8px;
+}
+
+.CreateTask__submit {
+  display: flex;
+  margin: auto
+}

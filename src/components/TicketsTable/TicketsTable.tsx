@@ -3,27 +3,26 @@ import React, { useEffect, useMemo } from 'react'
 import './styles.css'
 import { ITicket, TicketStatus, TicketStatusName } from '../../types/Ticket';
 import { useNavigate } from 'react-router-dom';
+import { useStores } from '../../hooks/useStores';
+import { IProjectTask } from '../../types/Projects';
+import { observer } from 'mobx-react';
 
 export interface ITicketsTableProps {
   projectId: number
 }
 
-const TicketsTable: React.FC<ITicketsTableProps> = ({projectId}) => {
+const TicketsTable: React.FC<ITicketsTableProps> = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(projectId)
-  }, [])
+  const {projectStore} = useStores();
 
   const onTicketIdClick = (id: number) => {
     navigate(`ticket/${id}`);
   }
 
-  const tickets: ITicket[] = []
-
   const columns = useMemo(() => [{
     title: '№',
-    dataIndex: 'id',
+    dataIndex: 'taskId',
     key: 'id',
     render: (id: number) => {
       return (
@@ -37,8 +36,8 @@ const TicketsTable: React.FC<ITicketsTableProps> = ({projectId}) => {
     }
   },{
     title: 'Название',
-    dataIndex: 'title',
-    key: 'title',
+    dataIndex: 'name',
+    key: 'name',
   },{
     title: 'Статус',
     dataIndex: 'status',
@@ -50,9 +49,9 @@ const TicketsTable: React.FC<ITicketsTableProps> = ({projectId}) => {
     title: 'Автор',
     dataIndex: 'authorId',
     key: 'authorId',
-    render: (_: any, ticket: ITicket) => {
+    render: (_: any, ticket: IProjectTask) => {
       if(ticket.authorId){
-        return ticket.authorName
+        return ticket.authorId
       }
     }
   }], [])
@@ -60,9 +59,9 @@ const TicketsTable: React.FC<ITicketsTableProps> = ({projectId}) => {
   return (
     <Table  
       columns={columns} 
-      dataSource={tickets}
+      dataSource={projectStore.projectTasks.tasks}
     />
   );
 }
 
-export default TicketsTable;
+export default observer(TicketsTable);

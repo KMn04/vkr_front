@@ -23,10 +23,10 @@ const TicketModalContainer: React.FC = () => {
   return (
     <div className="TicketModal">
       <div className="TicketModal__title">
-        {ticketStore.title}
+        {ticketStore.name}
       </div>
       <div className="TicketModal__status">
-        {ticketStore.status && TicketStatusName[ticketStore.status]}
+        {ticketStore.statusCode}
       </div>
       <div className="TicketModal__comments">
         <Comment/>
