@@ -20,8 +20,12 @@ const Projects: React.FC = () => {
     setOpenCreateProject(false)
   }
 
-  useEffect(() => {
+  const updateProjectsHandle = () => {
     projectsStore.fetchProjects()
+  }
+
+  useEffect(() => {
+    updateProjectsHandle()
   }, [])
 
   return (
@@ -29,6 +33,7 @@ const Projects: React.FC = () => {
       <div className="Projects__toolbar">
         <Button onClick={openCreateProjectHandler}>Создать проект</Button>
       </div>
+      <div className="Projects__list">
       {projectsStore.projects.map((project) => (
         <Card 
           className="Projects__card" 
@@ -41,10 +46,14 @@ const Projects: React.FC = () => {
           <p>{project.description}</p>
         </Card>
       ))}
+      </div>
       {projectsStore.state.isLoading && (<span>loading...</span>)}
       {isOpenCreateProject && (
         <Modal onClickOutside={closeCreateOpenHandler}>
-          <CreatePoject onClose={closeCreateOpenHandler}/>
+          <CreatePoject 
+            onSuccess={updateProjectsHandle} 
+            onClose={closeCreateOpenHandler}
+          />
         </Modal>
       )}
     </div>

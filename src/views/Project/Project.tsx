@@ -45,11 +45,26 @@ const ProjectPage: React.FC = () => {
             <span>администрирование</span>
           </div>
         </div>
-        <div className="ProjectPage__title">
-          {projectStore.name}
-        </div>
-        <div className="ProjectPage__description">
-          {projectStore.description}
+        <div className="ProjectPage__mainInfo">
+          <div className="ProjectPage__meta">
+            <div className="ProjectPage__title">
+              {projectStore.name}
+            </div>
+            <div className="ProjectPage__description">
+              {projectStore.description}
+            </div>
+          </div>
+          <div className="ProjectPage__components">
+            <div className="ProjectPage__members">
+              <h3>Команда</h3>
+              {projectStore.projectMembers.preparedMembers.map((member) => (
+                <div key={member.userId}>{`${member.fullName}(${member.user.login}, ${member.roleName})`}</div>
+              ))}
+            </div>
+            <div className="ProjectPage__notifiactions">
+              <h3>Уведомления</h3>
+            </div>
+          </div>
         </div>
         <div className="ProjectPage__tickets">
           <TicketsTable projectId={projectStore.id}/>

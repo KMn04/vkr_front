@@ -2,13 +2,16 @@
   min-height: 50px;
   border-bottom: 1px solid rgba(198, 197, 197, 0.815);
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
 }
 
 .Header__container {
   display: flex;
   align-items: center;
   padding: 16px;
-  gap: 8px;
+  gap: 16px;
 }
 
 .Header__link {
