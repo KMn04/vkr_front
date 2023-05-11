@@ -39,15 +39,15 @@ const Cabinet: React.FC = () => {
           layout='vertical'
           onFinish={editPersonalInfoHandler}
           initialValues={{
-            firstName: '',
-            secondName: '',
-            thirdName: ''
+            firstName: authStore.firstName,
+            secondName: authStore.secondName,
+            thirdName: authStore.thirdName
           }}
         >
           <Form.Item label="Фамилия" name="secondName">
             <Input />
           </Form.Item>
-          <Form.Item label="Имя" name="firstname">
+          <Form.Item label="Имя" name="firstName">
             <Input />
           </Form.Item>
           <Form.Item label="Отчество" name="thirdName">
@@ -59,15 +59,15 @@ const Cabinet: React.FC = () => {
       </div>
       <div className="Cabinet__systemInfo">
         <h3>Системная информация</h3>
-        <Form layout='vertical'>
+        <Form layout='vertical' >
           <Form.Item label="Логин" className="Cabinet__systemInfoRow">
-            <Input /><Button>Изменить логин</Button>
+            <Input value="petrov" /><Button>Изменить логин</Button>
           </Form.Item>
           <Form.Item label="Пароль" className="Cabinet__systemInfoRow">
-            <Input /> <Button>Изменить пароль</Button>
+            <Input  /> <Button>Изменить пароль</Button>
           </Form.Item>
           <Form.Item label="Email" className="Cabinet__systemInfoRow">
-            <Input /> <Button>Изменить email</Button>
+            <Input value="petrov@stud.kpfu.ru"/> <Button>Изменить email</Button>
           </Form.Item>
         </Form>
       </div>

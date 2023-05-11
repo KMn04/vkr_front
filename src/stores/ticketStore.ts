@@ -45,6 +45,7 @@ export class TicketStore {
           this.state = new SuccessStateStore();
         })
       }
+      this.state = new SuccessStateStore()
     } catch (error) {
       this.state = new ErrorStateStore(error)
     }
