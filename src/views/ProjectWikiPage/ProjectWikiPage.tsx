@@ -33,7 +33,7 @@ const ProjectWikiPage: React.FC = () => {
     <div className="ProjectWikiPage">
       <div className="ProjectWikiPage__toolbar">
         <div className="ProjectWikiPage__title">
-          {!isEditTitleMode ? projectWikiPageStore.title : (
+          {!isEditTitleMode ? projectWikiPageStore.tempTitle : (
             <Input 
               value={projectWikiPageStore.tempTitle} 
               onChange={changeTitleHandle} 
@@ -83,7 +83,7 @@ const ProjectWikiPage: React.FC = () => {
           ? (
             <ReactMarkdown 
               className="ProjectWikiPage__markdown" 
-              children={projectWikiPageStore.content ?? ''} 
+              children={projectWikiPageStore.tempContent ?? ''} 
             />
           ) 
           : (

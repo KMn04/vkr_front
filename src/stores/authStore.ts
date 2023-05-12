@@ -8,10 +8,19 @@ export class AuthStore {
 
   login?: string;
 
+  firstName?: string;
+
+  secondName?: string;
+
+  thirdName?: string;
+
   state: StateBaseStore;
 
   constructor() {
     makeAutoObservable(this)
+    this.firstName = 'Петр';
+    this.secondName = 'Петров';
+    this.thirdName = 'Иванович';
     this.state = new StateBaseStore()
   }
 
