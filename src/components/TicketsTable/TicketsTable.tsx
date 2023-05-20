@@ -1,34 +1,35 @@
 import { Table } from 'antd';
-import React, { useEffect, useMemo } from 'react'
+import React, {  useMemo } from 'react'
 import './styles.css'
-import { ITicket, TicketStatus, TicketStatusName } from '../../types/Ticket';
+import { TicketStatus, TicketStatusName } from '../../types/Ticket';
 import { useNavigate } from 'react-router-dom';
-import { useStores } from '../../hooks/useStores';
 import { IProjectTask } from '../../types/Projects';
-import { observer } from 'mobx-react';
 
 export interface ITicketsTableProps {
-  projectId: number
+  tasks: IProjectTask[];
+  onTicketClick?: (id: number, ticket: IProjectTask) => void;
 }
 
-const TicketsTable: React.FC<ITicketsTableProps> = () => {
+const TicketsTable: React.FC<ITicketsTableProps> = ({tasks, onTicketClick}) => {
   const navigate = useNavigate();
 
-  const {projectStore} = useStores();
-
-  const onTicketIdClick = (id: number) => {
-    navigate(`ticket/${id}`);
+  const onTicketIdClick = (id: number, ticket: IProjectTask) => {
+    if(onTicketClick){
+      onTicketClick(id, ticket)
+    }else{
+      navigate(`ticket/${id}`);
+    }
   }
 
   const columns = useMemo(() => [{
     title: '№',
     dataIndex: 'taskId',
     key: 'id',
-    render: (id: number) => {
+    render: (id: number, ticket: IProjectTask) => {
       return (
         <div
           className="TicketTable__idCell"
-          onClick={() => onTicketIdClick(id)}
+          onClick={() => onTicketIdClick(id, ticket)}
         >
           {id}
         </div>
@@ -59,9 +60,9 @@ const TicketsTable: React.FC<ITicketsTableProps> = () => {
   return (
     <Table  
       columns={columns} 
-      dataSource={projectStore.projectTasks.tasks}
+      dataSource={tasks}
     />
   );
 }
 
-export default observer(TicketsTable);
+export default TicketsTable;
