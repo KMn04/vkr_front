@@ -55,7 +55,7 @@ class ProjectsService {
 
 
   static async getProjectMembers(id: number): Promise<IProjectMember[]> {
-    const response = await ApiConnection.get(`${this.RoutePrefix}/${id}/members`);
+    const response = await ApiConnection.get(`${this.RoutePrefix}/${id}/team`);
     return response.data;
   }
 
@@ -133,15 +133,14 @@ class ProjectsService {
     return response.data
   }
 
-  static async editRole(projectId: number, userId: number, roleCode: number): Promise<void> {
-    await ApiConnection.put(`${this.RoutePrefix}/${projectId}/team`, {
-      userId: userId,
+  static async editRole(projectId: number, projectTeamId: number, roleCode: number): Promise<void> {
+    await ApiConnection.put(`${this.RoutePrefix}/${projectId}/team/${projectTeamId}`, {
       roleCode: roleCode
     })
   }
 
-  static async deleteUser(projectId: number, userId: number): Promise<void> {
-    await ApiConnection.delete(`${this.RoutePrefix}/${projectId}/team/${userId}`)
+  static async deleteUser(projectId: number, projectTeamId: number): Promise<void> {
+    await ApiConnection.delete(`${this.RoutePrefix}/${projectId}/team/${projectTeamId}`)
   }
 }
 

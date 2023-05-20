@@ -58,7 +58,7 @@ const ProjectPage: React.FC = () => {
             <div className="ProjectPage__members">
               <h3>Команда</h3>
               {projectStore.projectMembers.preparedMembers.map((member) => (
-                <div key={member.userId}>{`${member.fullName}(${member.user.login}, ${member.roleName})`}</div>
+                <div key={member.userId}>{`${member.fullName} ${member.roleName})`}</div>
               ))}
             </div>
             <div className="ProjectPage__notifiactions">
