@@ -44,7 +44,7 @@ const TicketModalContainer: React.FC = () => {
                   Тип:
                 </div>
                 <div className="TicketModal__type_value">
-                  Задача
+                  {ticketStore.typeName ?? '-'}
                 </div>
               </div>
               <div className="TicketModal__row">
@@ -52,7 +52,7 @@ const TicketModalContainer: React.FC = () => {
                   Приоритет:
                 </div>
                 <div className="TicketModal__priority_value">
-                  Высокий
+                  {ticketStore.priorityName ?? '-'}
                 </div>
               </div>
             </div>
@@ -62,7 +62,7 @@ const TicketModalContainer: React.FC = () => {
                 Проект:
               </div>
               <div className="TicketModal__project_value">
-                Проект 1
+                {ticketStore.projectName ?? '-'}
               </div>
             </div>
             <div className="TicketModal__row">
@@ -70,7 +70,7 @@ const TicketModalContainer: React.FC = () => {
                 Статус:
               </div>
               <div className="TicketModal__status_value">
-                В работе
+                {ticketStore.statusName ?? '-'}
               </div>
             </div>
           </div>
@@ -78,47 +78,45 @@ const TicketModalContainer: React.FC = () => {
         <div className="TicketModal__description">
           <Form layout='vertical'>
             <Form.Item label="Описание">
-              <TextArea value={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"} />
+              <TextArea value={ticketStore.description} />
             </Form.Item>
           </Form>
         </div>
       </div>
         <div className="TicketModal__additional">
           <div className="TicketModal__authors">
-            <div className="TicketModal__author_row"><div>Автор:</div><div>Тамара Ивановна</div></div>
-            <div className="TicketModal__author_row"><div>Исполнитель:</div><div>Сидоров Аркадий</div></div>
-            <div className="TicketModal__author_row"><div>Проверяющий:</div><div>Петров Петр</div></div>
+            <div className="TicketModal__author_row">
+              <div>Автор:</div><div>{ticketStore.authorName ?? '-'}</div>
+            </div>
+            <div className="TicketModal__author_row">
+              <div>Исполнитель:</div><div>{ticketStore.assigneeName ?? '-'}</div>
+            </div>
+            <div className="TicketModal__author_row">
+              <div>Проверяющий:</div><div>{ticketStore.supervizorName ?? '-'}</div>
+            </div>
           </div>
           <div className="TicketModal__dates">
-            <div className="TicketModal__row">
-              <div className="TicketModal__item_title">
-                Спринт: 
-              </div>
-              <div className="TicketModal__item_value">
-                Дипломный
-              </div>
-            </div>
             <Form layout='vertical' className="TicketModal__datesForm">
               <div className="TicketModal__dates_column">
                 <Form.Item label="План. дата начала">
-                  <DatePicker value={dayjs()}></DatePicker>
+                  <DatePicker value={ticketStore.dateStartPlanFormatted}></DatePicker>
                 </Form.Item>
                 <Form.Item label="Факт. дата начала">
-                  <DatePicker value={dayjs()}></DatePicker>
+                  <DatePicker value={ticketStore.dateStartFactFormatted}></DatePicker>
                 </Form.Item>
                 <Form.Item label="Потрачено факт.">
-                  <Input value={"3ч"} />
+                  <Input value={ticketStore.sumHoursFact ?? '-'} />
                 </Form.Item>
               </div>
               <div className="TicketModal__dates_column">
                 <Form.Item label="План. дата конца">
-                  <DatePicker value={dayjs()}></DatePicker>
+                  <DatePicker value={ticketStore.dateFinishPlanFormatted}></DatePicker>
                 </Form.Item>
                 <Form.Item label="Факт. дата конца">
-                  <DatePicker value={dayjs()}></DatePicker>
+                  <DatePicker value={ticketStore.dateFinishFactFormatted}></DatePicker>
                 </Form.Item>
                 <Form.Item label="Из запл.">
-                  <Input value={"5ч"} />
+                  <Input value={ticketStore.sumHoursPlan ?? '-'} />
                 </Form.Item>
               </div>
             </Form>

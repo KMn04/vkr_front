@@ -1,7 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { ErrorStateStore, FetchingStateStore, StateBaseStore, SuccessStateStore } from "./StateStores";
-import { TicketStatus } from "../types/Ticket";
-import TicketsService from "../services/TicketsService";
 import { IProjectWikiPage } from "../types/Projects";
 import ProjectsService from "../services/ProjectsServices";
 

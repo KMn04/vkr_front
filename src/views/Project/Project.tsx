@@ -67,7 +67,7 @@ const ProjectPage: React.FC = () => {
           </div>
         </div>
         <div className="ProjectPage__tickets">
-          <TicketsTable projectId={projectStore.id}/>
+          <TicketsTable tasks={projectStore.projectTasks.tasks}/>
         </div>
         <Outlet />
       </div>

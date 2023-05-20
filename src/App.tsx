@@ -11,6 +11,7 @@ import ProjectLayout from './components/Projectlayout/ProjectLayout'
 import ProjectWikiPage from './views/ProjectWikiPage/ProjectWikiPage'
 import ProjectTickets from './views/ProjectTickets/ProjectTickets'
 import Cabinet from './views/Cabinet/Cabinet'
+import AllTasks from './views/AllTasks/AllTasks'
 
 function App() {
 
@@ -71,6 +72,9 @@ function App() {
         },{
           path: 'cabinet',
           element: <Cabinet />
+        }, {
+          path: 'tasks',
+          element: <AllTasks />
         }
       ]
     }

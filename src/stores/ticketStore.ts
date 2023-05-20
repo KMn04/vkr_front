@@ -1,19 +1,54 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { ErrorStateStore, FetchingStateStore, StateBaseStore, SuccessStateStore } from "./StateStores";
 import ProjectsService from "../services/ProjectsServices";
+import dayjs, { Dayjs } from "dayjs";
 
 export class TicketStore {
   id?: number;
 
   projectId?: number;
 
-  name?: string;
+  projectName?: string;
 
-  statusCode?: number;
+  assigneeName?: string;
+
+  assigneeId?: number;
 
   authorId?: number;
 
   authorName?: string;
+
+  supervizorName?: string;
+
+  supervizorId?: number;
+
+  name?: string;
+
+  statusCode?: number;
+
+  statusName?: string;
+
+  dateFinishFact?: string;
+
+  dateFinishPlan?: string;
+
+  dateStartFact?: string;
+
+  dateStartPlan?: string;
+
+  description?: string;
+
+  priorityName?: string;
+
+  priorityCode?: number;
+
+  sumHoursFact?: number;
+
+  sumHoursPlan?: number;
+
+  typeName?: string;
+
+  typeCode?: number;
 
   state: StateBaseStore;
 
@@ -39,9 +74,27 @@ export class TicketStore {
         const response = await ProjectsService.getProjectTask(this.projectId, this.id);
         runInAction(() => {
           this.id = response.taskId;
-          this.name = response.name;
-          this.statusCode = response.statusCode;
+          this.assigneeName = response.assignee;
+          this.assigneeId = response.assigneeId;
           this.authorId = response.authorId;
+          this.authorName = response.author;
+          this.dateFinishFact = response.dateFinishFact;
+          this.dateFinishPlan = response.dateFinishPlan;
+          this.dateStartPlan = response.dateStartPlan;
+          this.dateStartFact = response.dateStartFact;
+          this.description = response.description;
+          this.priorityName = response.priority;
+          this.priorityCode = response.priorityCode;
+          this.supervizorId = response.supervizorId;
+          this.supervizorName = response.supervizor;
+          this.typeCode = response.typeCode;
+          this.typeName = response.type;
+          this.projectId = response.projectId;
+          this.projectName = response.project;
+          this.statusCode = response.statusCode;
+          this.statusName = response.status;
+          this.sumHoursFact = response.sumHoursFact;
+          this.sumHoursPlan = response.sumHoursPlan;
           this.state = new SuccessStateStore();
         })
       }
@@ -49,5 +102,21 @@ export class TicketStore {
     } catch (error) {
       this.state = new ErrorStateStore(error)
     }
+  }
+
+  get dateStartPlanFormatted(): Dayjs | undefined {
+    return this.dateStartPlan ? dayjs(this.dateStartPlan) : undefined
+  }
+
+  get dateStartFactFormatted(): Dayjs | undefined {
+    return this.dateStartFact ? dayjs(this.dateStartFact) : undefined
+  }
+
+  get dateFinishPlanFormatted(): Dayjs | undefined {
+    return this.dateFinishPlan ? dayjs(this.dateFinishPlan) : undefined
+  }
+
+  get dateFinishFactFormatted(): Dayjs | undefined {
+    return this.dateFinishFact ? dayjs(this.dateFinishFact) : undefined
   }
 }

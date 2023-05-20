@@ -65,18 +65,25 @@ export interface IProjectTask {
   name: string;
   description?: string;
   authorId: number;
-  asigneeId: number;
+  author?: string;
+  assigneeId: number;
+  assignee?: string;
   supervizorId: number;
+  supervizor?: string;
   dateFinishFact?: string;
   dateFinishPlan?: string;
   dateStartPlan?: string;
   dateStartFact?: string;
   priorityCode: number;
+  priority?: string;
   typeCode: number;
+  type?: string;
   statusCode: number;
-  sprintId?: number;
+  status?: string;
   sumHoursFact?: number;
   sumHoursPlan?: number;
+  projectId?: number;
+  project?: string;
 }
 
 export interface IProjectUpdate {

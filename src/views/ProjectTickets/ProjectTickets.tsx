@@ -30,7 +30,6 @@ const ProjectTickets: React.FC = () => {
 
   useEffect(() => {
     projectStore.fetch(+projectId!)
-    projectStore.projectTasks.fetch(+projectId!)
   }, [])
 
   if(!projectStore.id){
@@ -52,7 +51,7 @@ const ProjectTickets: React.FC = () => {
           <span>создать задачу</span>
         </div>
       </div>
-      <TicketsTable projectId={projectStore.id}/>
+      <TicketsTable tasks={projectStore.projectTasks.tasks}/>
       {isShowCreateTicket && (
         <Modal onClickOutside={closeCreateHandle}>
           <CreateTask onClose={closeCreateHandle}/>
