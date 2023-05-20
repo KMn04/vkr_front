@@ -6,7 +6,7 @@ import { useStores } from '../../hooks/useStores'
 
 export const MainLayout: React.FC = (  ) => {
 
-  const {authStore, currenciesStore} = useStores();
+  const {authStore, currenciesStore, rolesStore} = useStores();
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
@@ -18,7 +18,8 @@ export const MainLayout: React.FC = (  ) => {
         return;
       }
     }
-    currenciesStore.fetch()
+    currenciesStore.fetch();
+    rolesStore.fetch();
   }, [])
 
   return (

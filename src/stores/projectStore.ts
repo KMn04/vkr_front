@@ -44,6 +44,7 @@ export class ProjectStore {
           this.statusCode = response.statusCode;
           this.state = new SuccessStateStore();
         })
+        console.log('fetch')
         this.projectMembers.fetch(this.id)
         this.projectTasks?.fetch(this.id)
       }

@@ -21,3 +21,7 @@
 .ProjectAdministration__editForm .ant-form-item {
   margin-bottom: 8px;
 }
+
+.Admin__select {
+  display: flex
+}

@@ -1,4 +1,4 @@
-import { CurrenciesItem, DictionaryItem } from "../types/Common";
+import { CurrenciesItem, DictionaryItem, RolesItem } from "../types/Common";
 import { ApiConnection } from "./ApiConnection";
 
 class DictionaryService {
@@ -15,9 +15,13 @@ class DictionaryService {
     }))
   }
 
-  static async getRoles(): Promise<any[]> {
-    const response = await ApiConnection.get('/project_status');
-    return response.data
+  static async getRoles(): Promise<DictionaryItem[]> {
+    const response = await ApiConnection.get<RolesItem[]>('/roles');
+    return response.data.map(role => ({
+      itemCode: role.roleCode,
+      itemName: role.name,
+      description: role.description
+    }))
   }
 
   static async getTaskPriorities(): Promise<any[]> {

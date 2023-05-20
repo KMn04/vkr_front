@@ -1,12 +1,13 @@
-import { Button, Form, Input, Table } from 'antd';
+import { Button, Form, Input, Select, Table } from 'antd';
 import React from 'react';
 import { useStores } from '../../hooks/useStores';
 import './styles.css'
 import TextArea from 'antd/es/input/TextArea';
 import { IProjectUpdate } from '../../types/Projects';
+import { observer } from 'mobx-react';
 
 const ProjectAdministrationContainer: React.FC = () => {
-  const {projectStore} = useStores();
+  const {projectStore, rolesStore} = useStores();
 
   const submitEditHandle = async (values: IProjectUpdate) => {
       try{
@@ -23,10 +24,19 @@ const ProjectAdministrationContainer: React.FC = () => {
     key: 'userName'
   }, {
     title: 'Роль',
-    dataIndex: 'roleName',
-    key: 'userRole'
+    dataIndex: 'roleCode',
+    key: 'userRoleCode',
+    render: (roleCode: string) => {
+      console.log(roleCode)
+      return (
+      <Select 
+        className='Admin__select' 
+        value={roleCode} 
+        options={rolesStore.options}
+        onChange={() => {}} 
+      />)
+    }
   }];
-
   return (
     <div className="ProjectAdministration">
       <div className="ProjectAdministration__toolbar">
@@ -61,4 +71,4 @@ const ProjectAdministrationContainer: React.FC = () => {
   )
 }
 
-export default ProjectAdministrationContainer
+export default observer(ProjectAdministrationContainer)
