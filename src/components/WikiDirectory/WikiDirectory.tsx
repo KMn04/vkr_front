@@ -46,7 +46,7 @@ const WikiDirectory: React.FC<WikiDirectoryProps> = ({projectId}) => {
           <div 
             className="WikiDirectory__page" 
             onClick={() => {
-              navigate(`wiki/${page.id}`)
+              navigate(`wiki/${page.wikiPageId}`)
             }}
           >
             {page.title}

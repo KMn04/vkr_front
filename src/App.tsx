@@ -12,6 +12,7 @@ import ProjectWikiPage from './views/ProjectWikiPage/ProjectWikiPage'
 import ProjectTickets from './views/ProjectTickets/ProjectTickets'
 import Cabinet from './views/Cabinet/Cabinet'
 import AllTasks from './views/AllTasks/AllTasks'
+import TicketModalContainer from './views/TicketModal/TicketModalContainer'
 
 function App() {
 
@@ -47,27 +48,37 @@ function App() {
               path: '',
               element: <ProjectPage />,
               children: [
+                // {
+                //   path: 'ticket/:ticketId',
+                //   element: <TicketModal/>
+                // },
                 {
-                  path: 'ticket/:ticketId',
-                  element: <TicketModal/>
-                },{
                   path: 'administration',
                   element: <ProjectAdministration/>
                 }
               ]
-            },{
+            },
+            {
+              path: 'ticket/:ticketId',
+              element: <TicketModalContainer isPage/>
+            },
+            {
               path: 'wiki/:wikiPageId',
               element: <ProjectWikiPage />
             },{
               path: 'tasks',
               element: <ProjectTickets />,
               children: [
-                {
-                  path: 'ticket/:ticketId',
-                  element: <TicketModal/>
-                }
+                // {
+                //   path: 'ticket/:ticketId',
+                //   element: <TicketModal/>
+                // }
               ]
-            }
+            },
+            {
+              path: 'tasks/ticket/:ticketId',
+              element: <TicketModalContainer isPage/>
+            },
           ]
         },{
           path: 'cabinet',

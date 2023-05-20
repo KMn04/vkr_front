@@ -1,15 +1,11 @@
 
 
 export interface ICommentListItem {
-    id: number;
-    author: string;
-    content: string;
-}
-
-export interface IComment {
-    id: number;
-    author: string;
-    content: string;
+    commentId: string;
+    authorName: string;
+    commentText: string;
+    createdAt: string;
+    updatedAt: string
 }
 
 export interface ICreateCommentForm {
@@ -18,5 +14,10 @@ export interface ICreateCommentForm {
 
 
 export interface ICreateCommentRequest {
-    content?: string;
+    comment?: string;
+    taskId: number
+}
+
+export interface IGetCommentsParams {
+    taskId?: number;
 }

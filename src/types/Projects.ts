@@ -33,7 +33,7 @@ export interface ICreateProjectRequest {
 }
 
 export interface IProjectWikiPage {
-  id: number;
+  wikiPageId: string;
   title: string;
   content?: string;
 }

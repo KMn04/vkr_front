@@ -108,28 +108,13 @@ class ProjectsService {
   }
 
   static async getWiki(projectId: number): Promise<IProjectWikiPage[]> {
-    try {
-      const response = await ApiConnection.get(`${this.RoutePrefix}/${projectId}/wiki`);
-      return response.data
-    } catch {
-      return [{
-        id: 14,
-        title: 'BaSe',
-      }]
-    }
+    const response = await ApiConnection.get(`${this.RoutePrefix}/${projectId}/wiki`);
+    return response.data
   }
 
-  static async getWikiPage(projectId: number, wikiPageId: number): Promise<IProjectWikiPage> {
-    try {
-      const response = await ApiConnection.get(`${this.RoutePrefix}/${projectId}/wiki/${wikiPageId}`);
-      return response.data
-    } catch {
-      return {
-        id: 14,
-        title: 'BaSe',
-        content: 'Контент'
-      }
-    }
+  static async getWikiPage(projectId: number, wikiPageId: string): Promise<IProjectWikiPage> {
+    const response = await ApiConnection.get(`${this.RoutePrefix}/${projectId}/wiki/${wikiPageId}`);
+    return response.data;
   }
 
   static async createWikiPage(projectId: number, request: { title: string }): Promise<{ id: number }> {
@@ -141,6 +126,22 @@ class ProjectsService {
         id: 5
       }
     }
+  }
+
+  static async updateWikiPage(projectId: number, wikiPageId: string, payload: { title?: string, content?: string }): Promise<string> {
+    const response = await ApiConnection.put(`${this.RoutePrefix}/${projectId}/wiki/${wikiPageId}`, payload);
+    return response.data
+  }
+
+  static async editRole(projectId: number, userId: number, roleCode: number): Promise<void> {
+    await ApiConnection.put(`${this.RoutePrefix}/${projectId}/team`, {
+      userId: userId,
+      roleCode: roleCode
+    })
+  }
+
+  static async deleteUser(projectId: number, userId: number): Promise<void> {
+    await ApiConnection.delete(`${this.RoutePrefix}/${projectId}/team/${userId}`)
   }
 }
 

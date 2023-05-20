@@ -2,6 +2,8 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { ErrorStateStore, FetchingStateStore, StateBaseStore, SuccessStateStore } from "./StateStores";
 import ProjectsService from "../services/ProjectsServices";
 import dayjs, { Dayjs } from "dayjs";
+import { ICommentListItem } from "../types/Comments";
+import CommentsService from "../services/CommentServices";
 
 export class TicketStore {
   id?: number;
@@ -50,11 +52,18 @@ export class TicketStore {
 
   typeCode?: number;
 
+  comments?: ICommentListItem[]
+
   state: StateBaseStore;
 
   constructor() {
     makeAutoObservable(this);
     this.state = new StateBaseStore()
+  }
+
+  async fetchComments() {
+    const response = await CommentsService.getComments({ taskId: this.id })
+    this.comments = response
   }
 
   async fetch(projectId: number, id?: number) {
@@ -99,6 +108,7 @@ export class TicketStore {
         })
       }
       this.state = new SuccessStateStore()
+      this.fetchComments()
     } catch (error) {
       this.state = new ErrorStateStore(error)
     }

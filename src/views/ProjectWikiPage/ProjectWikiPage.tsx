@@ -14,8 +14,8 @@ const ProjectWikiPage: React.FC = () => {
   const [isEditTitleMode, setEditTitleMode] = useState(false);
 
   useEffect(() => {
-    projectWikiPageStore.fetch(parseInt(projectId!), parseInt(wikiPageId!))
-  }, [])
+    projectWikiPageStore.fetch(parseInt(projectId!), wikiPageId!)
+  }, [wikiPageId])
 
   const changeTitleHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
     projectWikiPageStore.tempTitle = event.target.value
@@ -33,7 +33,7 @@ const ProjectWikiPage: React.FC = () => {
     <div className="ProjectWikiPage">
       <div className="ProjectWikiPage__toolbar">
         <div className="ProjectWikiPage__title">
-          {!isEditTitleMode ? projectWikiPageStore.tempTitle : (
+          {!isEditTitleMode ? projectWikiPageStore.title : (
             <Input 
               value={projectWikiPageStore.tempTitle} 
               onChange={changeTitleHandle} 
@@ -52,7 +52,8 @@ const ProjectWikiPage: React.FC = () => {
             </Button>: 
             <Button 
               className="ProjectWikiPage__actions_button"
-              onClick={() => {
+              onClick={async () => {
+                await projectWikiPageStore.updateTitle()
                 setEditTitleMode(false)
               }}  
             >
@@ -70,7 +71,8 @@ const ProjectWikiPage: React.FC = () => {
             </Button> : 
             <Button 
               className="ProjectWikiPage__actions_button" 
-              onClick={() => {
+              onClick={async () => {
+                await projectWikiPageStore.updateContent()
                 setEditContentMode(false)
               }}
             >
@@ -83,7 +85,7 @@ const ProjectWikiPage: React.FC = () => {
           ? (
             <ReactMarkdown 
               className="ProjectWikiPage__markdown" 
-              children={projectWikiPageStore.tempContent ?? ''} 
+              children={projectWikiPageStore.content ?? ''} 
             />
           ) 
           : (

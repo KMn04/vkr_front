@@ -5,7 +5,7 @@ import ProjectsService from "../services/ProjectsServices";
 export class ProjectWikiPageStore {
   projectId?: number;
 
-  wikiPageId?: number;
+  wikiPageId?: string;
 
   title?: string;
 
@@ -22,7 +22,7 @@ export class ProjectWikiPageStore {
     this.state = new StateBaseStore()
   }
 
-  async fetch(projectId: number, wikiPageId: number) {
+  async fetch(projectId: number, wikiPageId: string) {
     this.state = new FetchingStateStore();
     try {
       if (projectId) {
@@ -47,6 +47,32 @@ export class ProjectWikiPageStore {
       }
     } catch (error) {
       this.state = new ErrorStateStore(error)
+    }
+  }
+
+  async updateTitle() {
+    if (this.projectId && this.wikiPageId) {
+      await ProjectsService.updateWikiPage(
+        this.projectId,
+        this.wikiPageId,
+        { title: this.tempTitle }
+      );
+    }
+    runInAction(() => {
+      this.title = this.tempTitle;
+    })
+  }
+
+  async updateContent() {
+    if (this.projectId && this.wikiPageId) {
+      await ProjectsService.updateWikiPage(
+        this.projectId,
+        this.wikiPageId,
+        { content: this.tempContent }
+      )
+      runInAction(() => {
+        this.content = this.tempContent;
+      })
     }
   }
 }
