@@ -36,10 +36,24 @@ export class ProjectMembersStore {
     }
   }
 
+  async changeRole(userId: number, roleCode: number) {
+    if (this.projectId) {
+      await ProjectsService.editRole(this.projectId, userId, roleCode);
+      this.fetch()
+    }
+  }
+
+  async deleteUser(userId: number) {
+    if (this.projectId) {
+      await ProjectsService.deleteUser(this.projectId, userId);
+      this.fetch()
+    }
+  }
+
   get preparedMembers() {
     return this.members.map((member) => ({
       ...member,
-      fullName: [member.user.firstName, member.user.secondName].join(' ')
+      fullName: member.projectMember
     }))
   }
 }

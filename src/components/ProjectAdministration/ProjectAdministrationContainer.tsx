@@ -5,6 +5,7 @@ import './styles.css'
 import TextArea from 'antd/es/input/TextArea';
 import { IProjectUpdate } from '../../types/Projects';
 import { observer } from 'mobx-react';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 const ProjectAdministrationContainer: React.FC = () => {
   const {projectStore, rolesStore} = useStores();
@@ -26,15 +27,25 @@ const ProjectAdministrationContainer: React.FC = () => {
     title: 'Роль',
     dataIndex: 'roleCode',
     key: 'userRoleCode',
-    render: (roleCode: string) => {
-      console.log(roleCode)
+    render: (roleCode: string, {projectTeamMemberId}: {projectTeamMemberId: number}) => {
       return (
       <Select 
         className='Admin__select' 
         value={roleCode} 
         options={rolesStore.options}
-        onChange={() => {}} 
+        onChange={(value) => {
+          projectStore.projectMembers.changeRole(projectTeamMemberId, +value)
+        }} 
       />)
+    }
+  }, {
+    title: 'Удалить',
+    dataIndex: 'projectTeamMemberId',
+    key: 'action',
+    render: (userId: number) => {
+      return (<AiOutlineDelete onClick={() => {
+        projectStore.projectMembers.deleteUser(userId)
+      }} />)
     }
   }];
   return (

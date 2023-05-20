@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { ErrorStateStore, FetchingStateStore, StateBaseStore, SuccessStateStore } from "./StateStores";
 import ProjectsService from "../services/ProjectsServices";
-import { ProjectMembersStore } from "./ProjectMembersStore";
+import { ProjectMembersStore } from "./projectMembersStore";
 import { IProjectUpdate } from "../types/Projects";
 import { ProjectTasksStore } from "./projectTasksStore";
 
@@ -44,9 +44,8 @@ export class ProjectStore {
           this.statusCode = response.statusCode;
           this.state = new SuccessStateStore();
         })
-        console.log('fetch')
         this.projectMembers.fetch(this.id)
-        this.projectTasks?.fetch(this.id)
+        this.projectTasks.fetch(this.id)
       }
     } catch (error) {
       this.state = new ErrorStateStore(error)

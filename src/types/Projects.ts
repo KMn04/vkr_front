@@ -55,9 +55,12 @@ export interface IProjectMemberUser {
 
 export interface IProjectMember {
   userId: number;
-  user: IProjectMemberUser;
+  projectName?: string;
+  projectTeamMemberId: number;
+  projectMember: string;
   roleCode: number;
-  roleName: string
+  roleName?: string;
+  roleDescription?: string
 }
 
 export interface IProjectTask {
