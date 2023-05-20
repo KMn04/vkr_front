@@ -3,10 +3,23 @@
   flex-direction: column;
   gap: 16px;
 }
+.TicketModal__page {
+  flex: 1;
+  padding: 8px 16px;
+
+}
 
 .TicketModal__content{
   display: flex;
   gap: 16px;
+}
+
+.TicketModal__page .TicketModal__MainInfo{
+  flex: 1
+}
+
+.TicketModal__page .TicketModal__additional {
+  flex: 1
 }
 
 .TicketModal__MainInfo{
@@ -58,6 +71,10 @@
   gap: 16px;
 }
 
+.TicketModal__page .TicketModal__statuses_column {
+  flex: 1
+}
+
 .TicketModal__statuses_column{
   display: flex;
   flex-direction: column;
@@ -87,6 +104,10 @@
   gap: 8px;
 }
 
+.TicketModal__page .TicketModal__dates_column {
+  flex: 1
+}
+
 .TicketModal__dates_column{
   display: flex;
   flex-direction: column;
@@ -103,4 +124,10 @@
 
 .TicketModal .ant-form-item-control-input-content{
   display: flex;
+}
+
+.TicketModal__comments {
+  display: flex;
+  flex-direction: column;
+  gap: 8px
 }

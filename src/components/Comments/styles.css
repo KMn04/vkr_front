@@ -2,3 +2,24 @@
     display: flex;
     margin: auto;
 }
+
+.Comment__author {
+    margin-right: 8px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.Comment__updatedDate, .Comment__createDate {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.Comment__createForm{
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid gray;
+}
+
+.Comment__submit {
+    margin-top: 8px
+}

@@ -3,3 +3,8 @@ export interface DictionaryItem {
   itemName: string;
   description?: string;
 }
+
+export interface CurrenciesItem {
+  currencyCode: number,
+  name: string,
+}

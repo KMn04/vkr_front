@@ -6,15 +6,17 @@ import { observer } from 'mobx-react';
 import Comment from '../../components/Comments/Comment';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { DatePicker, Form, Input } from 'antd';
-import dayjs from 'dayjs'
 import TextArea from 'antd/es/input/TextArea';
 
-const TicketModalContainer: React.FC = () => {
+export interface TicketModalContainer {
+  isPage?: boolean;
+}
+
+const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
   const {projectId, ticketId} = useParams();
   const {ticketStore} = useStores();
 
   useEffect(() => {
-    console.log(ticketId)
     if(ticketId && projectId){
       ticketStore.fetch(+projectId, +ticketId)
     }
@@ -25,7 +27,7 @@ const TicketModalContainer: React.FC = () => {
   }
 
   return (
-    <div className="TicketModal">
+    <div className={`TicketModal ${isPage? 'TicketModal__page' : ''}`}>
       <div className="TicketModal__content">
         <div className="TicketModal__MainInfo">
           <div className="TicketModal__toolbar">
@@ -124,7 +126,13 @@ const TicketModalContainer: React.FC = () => {
         </div>
       </div>
       <div className="TicketModal__comments">
-        <Comment/>
+        {ticketStore.comments?.map(comment => (
+          <Comment comment={comment} key={comment.commentId}/>
+        ))}
+        <Comment 
+          onUpdate={() => {ticketStore.fetchComments()}} 
+          ticketId={ticketStore.id}
+        />
       </div>
     </div>
   );
