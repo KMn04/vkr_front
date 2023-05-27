@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './styles.css';
 import { Button, Form, Input } from 'antd';
 import RegistrationService from '../../services/RegistrationServices';
-import { setTokenToLocalStorage } from '../../services/utils';
+import { setRefreshTokenToLocalStorage, setTokenToLocalStorage } from '../../services/utils';
 import { Link, useNavigate } from 'react-router-dom';
 
 interface IRegistrationForm {
@@ -23,6 +23,7 @@ const Register: React.FC = () => {
     try{
       const response = await RegistrationService.registration(params)
       setTokenToLocalStorage(response.token)
+      setRefreshTokenToLocalStorage(response.refreshToken)
       navigate('/')
     }catch{
       setLocalError('Произошла ошибка подключения')
