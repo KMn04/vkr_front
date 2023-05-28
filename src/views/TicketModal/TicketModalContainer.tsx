@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './styles.css'
 import { useStores } from '../../hooks/useStores';
@@ -7,6 +7,7 @@ import Comment from '../../components/Comments/Comment';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { DatePicker, Form, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
 
 export interface TicketModalContainer {
   isPage?: boolean;
@@ -15,6 +16,18 @@ export interface TicketModalContainer {
 const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
   const {projectId, ticketId} = useParams();
   const {ticketStore} = useStores();
+
+  const [files, setFiles] = useState<File[]>([])
+
+  const onDrop:(
+    acceptedFiles: File[],
+    fileRejections: FileRejection[],
+    event: DropEvent
+  ) => void = useCallback((acceptedFiles) => {
+    setFiles([...files, ...acceptedFiles])
+  }, [files])
+
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   useEffect(() => {
     if(ticketId && projectId){
@@ -123,6 +136,20 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
               </div>
             </Form>
           </div>
+        </div>
+      </div>
+      <div className="TicketModal__files">
+        <div className="TicketModal__files_table">
+          {files.map(file => (
+            <div className='TicketModal__files_file'>{file.name}</div>
+          ))}
+        </div>
+        <div {...getRootProps()}>
+          <input {...getInputProps()} />
+          {isDragActive ?
+            <p>Отпустите файл здесь ...</p> :
+            <p>Перенесите файлы сюда или нажмите для загрузки</p>
+          }
         </div>
       </div>
       <div className="TicketModal__comments">

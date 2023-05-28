@@ -1,5 +1,6 @@
 export interface IAuthResponse {
-  token?: string
+  token: string,
+  refreshToken: string
 }
 
 export interface IAuthRequest {
@@ -7,4 +8,9 @@ export interface IAuthRequest {
   password: string,
   firstName: string,
   email: string,
+}
+
+export interface ILoginRequest {
+  login: string,
+  password: string,
 }

@@ -131,3 +131,16 @@
   flex-direction: column;
   gap: 8px
 }
+
+.TicketModal__files {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid gray
+}
+
+.TicketModal__files_file {
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid gray;
+  margin-bottom: 4px
+}
