@@ -9,3 +9,8 @@ export interface IAuthRequest {
   firstName: string,
   email: string,
 }
+
+export interface ILoginRequest {
+  login: string,
+  password: string,
+}

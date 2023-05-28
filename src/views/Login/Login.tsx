@@ -31,8 +31,6 @@ const Login: React.FC = () => {
       const response = await RegistrationService.login({
         login: params.login,
         password: params.password,
-        firstName: params.firstName,
-        email: params.email
       })
       setTokenToLocalStorage(response.token)
       setRefreshTokenToLocalStorage(response.refreshToken)
