@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { DictionaryItem } from "../types/Common";
 import { StateBaseStore } from "./StateStores";
+import DictionaryService from "../services/DictionaryService";
 
 export class TaskStatusesStore {
   items: DictionaryItem[]
@@ -14,7 +15,14 @@ export class TaskStatusesStore {
   }
 
   async fetch() {
-    const response = await get();
+    const response = await DictionaryService.getTaskStatuses();
     this.items = response
+  }
+
+  get options() {
+    return this.items.map(item => ({
+      label: item.itemName,
+      value: item.itemCode
+    }))
   }
 }

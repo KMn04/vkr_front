@@ -21,5 +21,11 @@ export interface TaskTypeItem {
 }
 
 export interface TaskPriorityItem {
+  taskPriorityCode: number;
+  name: string;
+}
 
+export interface TaskStatusItem {
+  taskStatusCode: number;
+  name: string;
 }

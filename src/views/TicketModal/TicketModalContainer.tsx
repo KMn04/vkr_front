@@ -15,7 +15,10 @@ export interface TicketModalContainer {
 
 const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
   const {projectId, ticketId} = useParams();
-  const {ticketStore, taskTypesStore, taskPrioritiesStore} = useStores();
+  const {
+    ticketStore, taskTypesStore, taskPrioritiesStore,
+    taskStatusesStore
+  } = useStores();
 
   const [files, setFiles] = useState<File[]>([])
 
@@ -34,6 +37,7 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
   useEffect(() => {
     taskTypesStore.fetch();
     taskPrioritiesStore.fetch();
+    taskStatusesStore.fetch();
     if(ticketId && projectId){
       ticketStore.fetch(+projectId, +ticketId)
     }
@@ -105,6 +109,13 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
                   {editMode
                     ? <Select 
                         options={taskPrioritiesStore.options}
+                        value={ticketStore.priorityCode}
+                        onChange={(value, item) => {
+                          if(!Array.isArray(item)){
+                            ticketStore.priorityCode = item.value;
+                            ticketStore.priorityName = item.label;
+                          }
+                        }}
                       />
                     :ticketStore.priorityName ?? '-'}
                 </div>
@@ -124,7 +135,18 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
                 Статус:
               </div>
               <div className="TicketModal__status_value">
-                {ticketStore.statusName ?? '-'}
+                {editMode 
+                  ? <Select 
+                      options={taskStatusesStore.options}
+                      value={ticketStore.statusCode}
+                      onChange={(value, item) => {
+                        if(!Array.isArray(item)){
+                          ticketStore.statusCode = item.value;
+                          ticketStore.statusName = item.label;
+                        }
+                      }}
+                    />
+                  : ticketStore.statusName ?? '-'}
               </div>
             </div>
           </div>
