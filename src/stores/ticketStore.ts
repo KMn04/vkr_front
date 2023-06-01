@@ -21,9 +21,9 @@ export class TicketStore {
 
   authorName?: string;
 
-  supervizorName?: string;
+  supervisorName?: string;
 
-  supervizorId?: number;
+  supervisorId?: number;
 
   name?: string;
 
@@ -95,8 +95,8 @@ export class TicketStore {
           this.description = response.description;
           this.priorityName = response.priority;
           this.priorityCode = response.priorityCode;
-          this.supervizorId = response.supervizorId;
-          this.supervizorName = response.supervizor;
+          this.supervisorId = response.supervisorId;
+          this.supervisorName = response.supervisor;
           this.typeCode = response.typeCode;
           this.typeName = response.type;
           this.projectId = response.projectId;
@@ -112,6 +112,26 @@ export class TicketStore {
       this.fetchComments()
     } catch (error) {
       this.state = new ErrorStateStore(error)
+    }
+  }
+
+  async update() {
+    if (this.id) {
+      await TicketsService.update(this.id, {
+        assigneeId: this.assigneeId,
+        authorId: this.authorId,
+        dateFinishFact: this.dateFinishFact,
+        dateFinishPlan: this.dateFinishPlan,
+        dateStartPlan: this.dateStartPlan,
+        dateStartFact: this.dateStartFact,
+        description: this.description,
+        priorityCode: this.priorityCode,
+        supervisorId: this.supervisorId,
+        typeCode: this.typeCode,
+        statusCode: this.statusCode,
+        sumHoursFact: this.sumHoursFact,
+        sumHoursPlan: this.sumHoursPlan
+      })
     }
   }
 

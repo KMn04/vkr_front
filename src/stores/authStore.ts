@@ -21,9 +21,6 @@ export class AuthStore {
 
   constructor() {
     makeAutoObservable(this)
-    this.firstName = 'Петр';
-    this.secondName = 'Петров';
-    this.thirdName = 'Иванович';
     this.state = new StateBaseStore()
   }
 

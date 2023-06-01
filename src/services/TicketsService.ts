@@ -1,5 +1,5 @@
 import { IProjectTask } from '../types/Projects';
-import { ITicket } from '../types/Ticket';
+import { ITicket, IUpdateTicketRequest } from '../types/Ticket';
 import { ApiConnection } from './ApiConnection';
 
 class TicketsService {
@@ -19,6 +19,10 @@ class TicketsService {
 
   static async delete(id: number): Promise<void> {
     await ApiConnection.delete(this.RoutePrefix + '/' + id)
+  }
+
+  static async update(taskId: number, request: IUpdateTicketRequest): Promise<void> {
+    await ApiConnection.put(this.RoutePrefix + '/' + taskId, request)
   }
 }
 
