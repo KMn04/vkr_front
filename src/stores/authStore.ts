@@ -40,15 +40,10 @@ export class AuthStore {
       this.refreshToken = refreshToken ?? undefined
       const payload = jwtDecode(this.token) as { login: string };
       this.login = payload.login
-    } else {
-      if (refreshToken) {
-        this.refreshToken = refreshToken;
-        await this.tryRefreshToken()
-      }
-      if (!this.token) {
-        throw false
-      }
+      return true
     }
+
+    return false
   }
 
   logout() {
