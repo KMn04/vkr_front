@@ -4,6 +4,7 @@ import ProjectsService from "../services/ProjectsServices";
 import dayjs, { Dayjs } from "dayjs";
 import { ICommentListItem } from "../types/Comments";
 import CommentsService from "../services/CommentServices";
+import TicketsService from "../services/TicketsService";
 
 export class TicketStore {
   id?: number;
@@ -111,6 +112,12 @@ export class TicketStore {
       this.fetchComments()
     } catch (error) {
       this.state = new ErrorStateStore(error)
+    }
+  }
+
+  async delete() {
+    if (this.id) {
+      await TicketsService.delete(this.id)
     }
   }
 

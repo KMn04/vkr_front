@@ -12,15 +12,20 @@ export interface ICreateTask {
 
 interface CreateTaskProp {
   onClose: () => void;
+  onSuccess?: () => void;
 }
 
-const CreateTask: React.FC<CreateTaskProp> = ({onClose}) => {
+const CreateTask: React.FC<CreateTaskProp> = ({onClose, onSuccess}) => {
   const {projectId} = useParams();
 
   const createHandle = async (values: ICreateTask) => {
     if(projectId){
       try{
-        await ProjectsService.createTask(+projectId, values)
+        await ProjectsService.createTask(+projectId, values);
+        if(onSuccess){
+          onSuccess();
+        }
+        onClose();
       }catch(error){
         console.log(error);
       }

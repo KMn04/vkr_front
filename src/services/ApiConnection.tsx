@@ -1,5 +1,16 @@
 import axios from 'axios';
-import { getTokenFromLocalStorage } from './utils';
+import { getRefreshTokenFromLocalStorage, getTokenFromLocalStorage, setTokenToLocalStorage } from './utils';
+import RefreshTokenService from './RefreshTokenServices';
+
+export const tryRefreshAccess = async () => {
+  const refreshToken = getRefreshTokenFromLocalStorage();
+  if(refreshToken){
+    const response = await RefreshTokenService.getAccess({refreshToken: refreshToken});
+    setTokenToLocalStorage(response.token);
+    location.reload()
+  }
+  return false
+}
 
 export const ApiConnection = axios.create({
   baseURL: `http://localhost:3000`,
@@ -10,11 +21,12 @@ export const ApiConnection = axios.create({
 });
 
 ApiConnection.interceptors.response.use((response) => {
-  if (response.status === 401 || response.status === 400) {
-    throw response;
-  }
   return response;
 }, (error) => {
+  console.log(error)
+  if (error.response.status === 401) {
+    tryRefreshAccess()
+  }
   const errors = error.response.data;
   throw errors;
 });
@@ -27,6 +39,7 @@ const getToken = () => {
 
 ApiConnection.interceptors.request.use((config) => {
   const token = getToken();
+  
   if (config.headers) {
     config.headers.Authorization = token;
   }

@@ -5,7 +5,7 @@ import { useStores } from '../../hooks/useStores';
 import { observer } from 'mobx-react';
 import Comment from '../../components/Comments/Comment';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
-import { DatePicker, Form, Input } from 'antd';
+import { Button, DatePicker, Form, Input, Popconfirm, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
 
@@ -15,9 +15,11 @@ export interface TicketModalContainer {
 
 const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
   const {projectId, ticketId} = useParams();
-  const {ticketStore} = useStores();
+  const {ticketStore, taskTypesStore, taskPrioritiesStore} = useStores();
 
   const [files, setFiles] = useState<File[]>([])
+
+  const [editMode, setEditMode] = useState(false); 
 
   const onDrop:(
     acceptedFiles: File[],
@@ -30,6 +32,8 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   useEffect(() => {
+    taskTypesStore.fetch();
+    taskPrioritiesStore.fetch();
     if(ticketId && projectId){
       ticketStore.fetch(+projectId, +ticketId)
     }
@@ -37,6 +41,15 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
 
   if(ticketStore.state.isLoading){
     return <span>Загрузка задачи...</span>
+  }
+
+  const onDeleteClickHandle = async () => {
+    await ticketStore.delete()
+    history.back()
+  }
+
+  const onSaveClickHandler = () => {
+    setEditMode(false)
   }
 
   return (
@@ -48,8 +61,19 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
               Название: {ticketStore.name}
             </div>
             <div className="TicketModal__actions">
-              <AiFillEdit size={16}/>
-              <AiFillDelete size={16} />
+              {editMode && <Button onClick={onSaveClickHandler}>Сохранить</Button>}
+              {!editMode && <AiFillEdit onClick={() => {
+                setEditMode(true);
+              }} size={16}/>}
+              <Popconfirm
+                title="Удалить?"
+                description="Вы действительно хотите удалить задачу?"
+                onConfirm={onDeleteClickHandle}
+                okText="Да"
+                cancelText="Нет"
+              >
+                <AiFillDelete size={16} />
+              </Popconfirm>
             </div>
           </div>
           <div className="TicketModal__statuses">
@@ -59,7 +83,18 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
                   Тип:
                 </div>
                 <div className="TicketModal__type_value">
-                  {ticketStore.typeName ?? '-'}
+                  {editMode 
+                    ? <Select 
+                        options={taskTypesStore.options} 
+                        value={ticketStore.typeCode}
+                        onChange={(value, item) => {
+                          if(!Array.isArray(item)){
+                            ticketStore.typeCode = item.value;
+                            ticketStore.typeName = item.label;
+                          }
+                        }}  
+                      /> 
+                    : ticketStore.typeName ?? '-'}
                 </div>
               </div>
               <div className="TicketModal__row">
@@ -67,7 +102,11 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
                   Приоритет:
                 </div>
                 <div className="TicketModal__priority_value">
-                  {ticketStore.priorityName ?? '-'}
+                  {editMode
+                    ? <Select 
+                        options={taskPrioritiesStore.options}
+                      />
+                    :ticketStore.priorityName ?? '-'}
                 </div>
               </div>
             </div>
