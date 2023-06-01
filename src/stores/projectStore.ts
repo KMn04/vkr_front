@@ -58,6 +58,12 @@ export class ProjectStore {
     }
   }
 
+  async addUser(userId: number) {
+    if (this.id) {
+      await ProjectsService.addMember(this.id, userId)
+    }
+  }
+
   async delete() {
     if (this.id) {
       await ProjectsService.deleteProject(this.id)

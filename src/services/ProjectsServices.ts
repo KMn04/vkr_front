@@ -63,6 +63,10 @@ class ProjectsService {
     return response.data;
   }
 
+  static async addMember(id: number, userId: number): Promise<void> {
+    await ApiConnection.post(this.RoutePrefix + '/' + id + '/team', { userId: userId, roleCode: 1 })
+  }
+
   static async getProjectTasks(id: number): Promise<IProjectTask[]> {
     const response = await ApiConnection.get(`${this.RoutePrefix}/${id}/tasks`);
     return response.data;
