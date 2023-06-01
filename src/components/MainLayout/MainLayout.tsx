@@ -9,15 +9,18 @@ export const MainLayout: React.FC = (  ) => {
   const {authStore, currenciesStore, rolesStore} = useStores();
   const navigate = useNavigate();
 
-  useLayoutEffect(() => {
+  const checkLogin = async () => {
     if(!authStore.token){
-      try{
-        authStore.tryGetToken();
-      }catch{
+      const res = await authStore.tryGetToken(); 
+      if(!res){
         navigate('/login');
         return;
       }
     }
+  }
+
+  useLayoutEffect(() => {
+    checkLogin()
     currenciesStore.fetch();
     rolesStore.fetch();
   }, [])
