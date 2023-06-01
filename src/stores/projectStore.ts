@@ -57,4 +57,10 @@ export class ProjectStore {
       await ProjectsService.update(this.id, values)
     }
   }
+
+  async delete() {
+    if (this.id) {
+      await ProjectsService.deleteProject(this.id)
+    }
+  }
 }

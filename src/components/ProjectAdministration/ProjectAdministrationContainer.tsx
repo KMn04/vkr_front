@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, Table } from 'antd';
+import { Button, Form, Input, Popconfirm, Select, Table } from 'antd';
 import React from 'react';
 import { useStores } from '../../hooks/useStores';
 import './styles.css'
@@ -6,9 +6,11 @@ import TextArea from 'antd/es/input/TextArea';
 import { IProjectUpdate } from '../../types/Projects';
 import { observer } from 'mobx-react';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectAdministrationContainer: React.FC = () => {
   const {projectStore, rolesStore} = useStores();
+  const navigate = useNavigate()
 
   const submitEditHandle = async (values: IProjectUpdate) => {
       try{
@@ -48,6 +50,12 @@ const ProjectAdministrationContainer: React.FC = () => {
       }} />)
     }
   }];
+
+  const onDeleteClickHandle = async () => {
+    await projectStore.delete();
+    navigate('/projects')
+  }
+
   return (
     <div className="ProjectAdministration">
       <div className="ProjectAdministration__toolbar">
@@ -78,6 +86,15 @@ const ProjectAdministrationContainer: React.FC = () => {
           </Button>
         <Table columns={columns} dataSource={projectStore.projectMembers.preparedMembers}/>
       </div>
+      <Popconfirm
+        title="Удалить?"
+        description="Вы действительно хотите удалить проект?"
+        onConfirm={onDeleteClickHandle}
+        okText="Да"
+        cancelText="Нет"
+      >
+        <Button>Удалить проект</Button>
+      </Popconfirm>
     </div>
   )
 }

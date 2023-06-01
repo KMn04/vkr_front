@@ -53,6 +53,10 @@ class ProjectsService {
     }
   }
 
+  static async deleteProject(id: number): Promise<void> {
+    await ApiConnection.delete(this.RoutePrefix + '/' + id)
+  }
+
 
   static async getProjectMembers(id: number): Promise<IProjectMember[]> {
     const response = await ApiConnection.get(`${this.RoutePrefix}/${id}/team`);
