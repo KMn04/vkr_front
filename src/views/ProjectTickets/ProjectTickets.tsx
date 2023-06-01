@@ -54,7 +54,9 @@ const ProjectTickets: React.FC = () => {
       <TicketsTable tasks={projectStore.projectTasks.tasks}/>
       {isShowCreateTicket && (
         <Modal onClickOutside={closeCreateHandle}>
-          <CreateTask onClose={closeCreateHandle}/>
+          <CreateTask onSuccess={() => {
+            projectStore.fetch()
+          }} onClose={closeCreateHandle}/>
         </Modal>
       )}
       <Outlet/>

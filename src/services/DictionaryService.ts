@@ -1,4 +1,4 @@
-import { CurrenciesItem, DictionaryItem, RolesItem } from "../types/Common";
+import { CurrenciesItem, DictionaryItem, RolesItem, TaskPriorityItem, TaskStatusItem, TaskTypeItem } from "../types/Common";
 import { ApiConnection } from "./ApiConnection";
 
 class DictionaryService {
@@ -24,19 +24,28 @@ class DictionaryService {
     }))
   }
 
-  static async getTaskPriorities(): Promise<any[]> {
-    const response = await ApiConnection.get('/project_status');
-    return response.data
+  static async getTaskPriorities(): Promise<DictionaryItem[]> {
+    const response = await ApiConnection.get<TaskPriorityItem[]>('/task_priorities');
+    return response.data.map(item => ({
+      itemCode: item.taskPriorityCode,
+      itemName: item.name
+    }))
   }
 
-  static async getTaskStatuses(): Promise<any[]> {
-    const response = await ApiConnection.get('/project_status');
-    return response.data
+  static async getTaskStatuses(): Promise<DictionaryItem[]> {
+    const response = await ApiConnection.get<TaskStatusItem[]>('/task_statuses');
+    return response.data.map(item => ({
+      itemCode: item.taskStatusCode,
+      itemName: item.name
+    }))
   }
 
-  static async getTaskTypes(): Promise<any[]> {
-    const response = await ApiConnection.get('/project_status');
-    return response.data
+  static async getTaskTypes(): Promise<DictionaryItem[]> {
+    const response = await ApiConnection.get<TaskTypeItem[]>('/task_types');
+    return response.data.map(item => ({
+      itemCode: item.taskTypeCode,
+      itemName: item.name
+    }))
   }
 }
 
