@@ -71,8 +71,8 @@ export interface IProjectTask {
   author?: string;
   assigneeId: number;
   assignee?: string;
-  supervizorId: number;
-  supervizor?: string;
+  supervisorId: number;
+  supervisor?: string;
   dateFinishFact?: string;
   dateFinishPlan?: string;
   dateStartPlan?: string;

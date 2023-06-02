@@ -50,6 +50,10 @@ export class ProjectMembersStore {
     }
   }
 
+  get membersIds() {
+    return this.members.map(member => member.userId)
+  }
+
   get preparedMembers() {
     return this.members.map((member) => ({
       ...member,

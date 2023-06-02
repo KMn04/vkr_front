@@ -144,3 +144,13 @@
   border: 1px solid gray;
   margin-bottom: 4px
 }
+
+.TicketModal__select {
+  flex: 1;
+  display: flex;
+  max-width: 60%;
+}
+
+.TicketModal__select .ant-select {
+  flex: 1
+}

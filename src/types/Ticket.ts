@@ -19,3 +19,20 @@ export interface ITicket {
   authorId?: number;
   authorName?: string;
 }
+
+export interface IUpdateTicketRequest {
+  assigneeId?: number;
+  authorId?: number;
+  dateFinishFact?: string;
+  dateFinishPlan?: string;
+  dateStartPlan?: string;
+  dateStartFact?: string;
+  description?: string;
+  priorityCode?: number;
+  supervisorId?: number;
+  typeCode?: number;
+  projectId?: number;
+  statusCode?: number;
+  sumHoursFact?: number;
+  sumHoursPlan?: number;
+}

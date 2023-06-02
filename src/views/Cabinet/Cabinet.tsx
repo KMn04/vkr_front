@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles.css';
 import { useStores } from '../../hooks/useStores';
 import { observer } from 'mobx-react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Popconfirm } from 'antd';
+import { setRefreshTokenToLocalStorage, setTokenToLocalStorage } from '../../services/utils';
 
 interface IInfoRorm {
   firstName: string,
@@ -17,20 +18,35 @@ const Cabinet: React.FC = () => {
     authStore.logout();
   }
 
-  const deleteAccountHandler = () => {
-    window.confirm('Точно?')
+  const onDeleteClickHandle = async () => {
+    await authStore.delete();
+    setTokenToLocalStorage();
+    setRefreshTokenToLocalStorage();
+    location.reload();
   }
 
-  const editPersonalInfoHandler = (values: IInfoRorm) => {
-    console.log(values)
+  const editPersonalInfoHandler = async (values: IInfoRorm) => {
+    await authStore.update();
+    authStore.fetch();
   }
+
+  useEffect(() => {
+    authStore.fetch()
+  }, [])
 
   return (
     <div className="Cabinet">
       <div className="Cabinet__toolbar">
         <Button onClick={logoutHandler}>Выйти</Button>
-        
-        <Button onClick={deleteAccountHandler}>Удалить аккаунт</Button>
+        <Popconfirm
+          title="Удалить?"
+          description="Вы действительно хотите удалить учетную запись?"
+          onConfirm={onDeleteClickHandle}
+          okText="Да"
+          cancelText="Нет"
+        >
+          <Button>Удалить аккаунт</Button>
+        </Popconfirm>
       </div>
       <div className="Cabinet__info">
         <h3>Персональные данные</h3>
@@ -38,20 +54,30 @@ const Cabinet: React.FC = () => {
           className="Cabinet__infoForm" 
           layout='vertical'
           onFinish={editPersonalInfoHandler}
-          initialValues={{
-            firstName: authStore.firstName,
-            secondName: authStore.secondName,
-            thirdName: authStore.thirdName
-          }}
         >
-          <Form.Item label="Фамилия" name="secondName">
-            <Input />
+          <Form.Item label="Фамилия">
+            <Input 
+              value={authStore.secondName} 
+              onChange={(e) => {
+                authStore.secondName = e.target.value;
+              }}
+            />
           </Form.Item>
-          <Form.Item label="Имя" name="firstName">
-            <Input />
+          <Form.Item label="Имя">
+            <Input
+              value={authStore.firstName}
+              onChange={(e) => {
+                authStore.firstName = e.target.value
+              }}
+            />
           </Form.Item>
-          <Form.Item label="Отчество" name="thirdName">
-            <Input />
+          <Form.Item label="Отчество">
+            <Input 
+              value={authStore.thirdName}
+              onChange={(e) => {
+                authStore.thirdName = e.target.value;
+              }}
+            />
           </Form.Item>
 
           <Button htmlType='submit'>Сохранить персональные данные</Button>
@@ -61,13 +87,21 @@ const Cabinet: React.FC = () => {
         <h3>Системная информация</h3>
         <Form layout='vertical' >
           <Form.Item label="Логин" className="Cabinet__systemInfoRow">
-            <Input value="petrov" /><Button>Изменить логин</Button>
+            <Input 
+              value={authStore.login} 
+              onChange={(e) => {
+                authStore.login = e.target.value;
+              }} 
+            />
           </Form.Item>
           <Form.Item label="Пароль" className="Cabinet__systemInfoRow">
             <Input  /> <Button>Изменить пароль</Button>
           </Form.Item>
           <Form.Item label="Email" className="Cabinet__systemInfoRow">
-            <Input value="petrov@stud.kpfu.ru"/> <Button>Изменить email</Button>
+            <Input 
+              value={authStore.email} 
+              onChange={(e) => {authStore.email = e.target.value}}
+            />
           </Form.Item>
         </Form>
       </div>

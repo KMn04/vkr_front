@@ -11,6 +11,7 @@ import { RolesStore } from '../stores/rolesStore';
 import { TaskPrioritiesStore } from '../stores/taskPrioritiesStore';
 import { TaskStatusesStore } from '../stores/taskStatusesStore';
 import { TaskTypesStore } from '../stores/taskTypesStore';
+import { UsersStore } from '../stores/usersStore';
 
 export const storeContext = React.createContext({
   authStore: new AuthStore(),
@@ -24,5 +25,6 @@ export const storeContext = React.createContext({
   rolesStore: new RolesStore(),
   taskPrioritiesStore: new TaskPrioritiesStore(),
   taskStatusesStore: new TaskStatusesStore(),
-  taskTypesStore: new TaskTypesStore()
+  taskTypesStore: new TaskTypesStore(),
+  usersStore: new UsersStore(),
 });

@@ -17,7 +17,7 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
   const {projectId, ticketId} = useParams();
   const {
     ticketStore, taskTypesStore, taskPrioritiesStore,
-    taskStatusesStore
+    taskStatusesStore, usersStore
   } = useStores();
 
   const [files, setFiles] = useState<File[]>([])
@@ -38,6 +38,7 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
     taskTypesStore.fetch();
     taskPrioritiesStore.fetch();
     taskStatusesStore.fetch();
+    usersStore.fetch()
     if(ticketId && projectId){
       ticketStore.fetch(+projectId, +ticketId)
     }
@@ -52,8 +53,12 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
     history.back()
   }
 
-  const onSaveClickHandler = () => {
-    setEditMode(false)
+  const onSaveClickHandler = async () => {
+    await ticketStore.update();
+    setEditMode(false);
+    if(ticketId && projectId){
+      ticketStore.fetch(+projectId, +ticketId)
+    }
   }
 
   return (
@@ -154,7 +159,11 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
         <div className="TicketModal__description">
           <Form layout='vertical'>
             <Form.Item label="Описание">
-              <TextArea value={ticketStore.description} />
+              <TextArea 
+                value={ticketStore.description} 
+                onChange={editMode ? (e) => {
+                  ticketStore.description = e.target.value;
+                } : undefined}/>
             </Form.Item>
           </Form>
         </div>
@@ -165,34 +174,100 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
               <div>Автор:</div><div>{ticketStore.authorName ?? '-'}</div>
             </div>
             <div className="TicketModal__author_row">
-              <div>Исполнитель:</div><div>{ticketStore.assigneeName ?? '-'}</div>
+              <div>Исполнитель:</div>
+              <div className='TicketModal__select'>
+                {editMode 
+                 ? <Select
+                    options={usersStore.options}
+                    value={ticketStore.assigneeId}
+                    onChange={(value, item) => {
+                      if(!Array.isArray(item)){
+                        ticketStore.assigneeId = item.value;
+                        ticketStore.assigneeName = item.label
+                      }
+                    }} 
+                    />
+                 : ticketStore.assigneeName ?? '-'}
+              </div>
             </div>
             <div className="TicketModal__author_row">
-              <div>Проверяющий:</div><div>{ticketStore.supervizorName ?? '-'}</div>
+              <div>Проверяющий:</div><div className='TicketModal__select'>
+                {editMode ? <Select
+                    options={usersStore.options}
+                    value={ticketStore.supervisorId}
+                    onChange={(value, item) => {
+                      if(!Array.isArray(item)){
+                        ticketStore.supervisorId = item.value;
+                        ticketStore.supervisorName = item.label
+                      }
+                    }} 
+                    /> 
+                  : ticketStore.supervisorName ?? '-'}</div>
             </div>
           </div>
           <div className="TicketModal__dates">
             <Form layout='vertical' className="TicketModal__datesForm">
               <div className="TicketModal__dates_column">
                 <Form.Item label="План. дата начала">
-                  <DatePicker value={ticketStore.dateStartPlanFormatted}></DatePicker>
+                  <DatePicker 
+                    value={ticketStore.dateStartPlanFormatted} 
+                    onChange={editMode 
+                    ? (value) => {
+                      ticketStore.dateStartPlan = value?.format();
+                    } 
+                    : undefined} 
+                  />
                 </Form.Item>
                 <Form.Item label="Факт. дата начала">
-                  <DatePicker value={ticketStore.dateStartFactFormatted}></DatePicker>
+                  <DatePicker 
+                    value={ticketStore.dateStartFactFormatted}
+                    onChange={editMode 
+                      ? (value) => {
+                        ticketStore.dateStartFact = value?.format();
+                      } 
+                      : undefined}  
+                  />
                 </Form.Item>
                 <Form.Item label="Потрачено факт.">
-                  <Input value={ticketStore.sumHoursFact ?? '-'} />
+                  <Input 
+                    value={ticketStore.sumHoursFact ?? '-'} 
+                    type='number'
+                    onChange={editMode 
+                      ? (e) => {ticketStore.sumHoursFact = parseInt(e.target.value)} 
+                      : undefined} 
+                  />
                 </Form.Item>
               </div>
               <div className="TicketModal__dates_column">
                 <Form.Item label="План. дата конца">
-                  <DatePicker value={ticketStore.dateFinishPlanFormatted}></DatePicker>
+                  <DatePicker 
+                    value={ticketStore.dateFinishPlanFormatted}
+                    onChange={editMode 
+                      ? (value) => {
+                        ticketStore.dateFinishPlan = value?.format();
+                      } 
+                      : undefined}   
+                  />
                 </Form.Item>
                 <Form.Item label="Факт. дата конца">
-                  <DatePicker value={ticketStore.dateFinishFactFormatted}></DatePicker>
+                  <DatePicker 
+                    value={ticketStore.dateFinishFactFormatted}
+                    onChange={editMode 
+                      ? (value) => {
+                        ticketStore.dateFinishFact = value?.format();
+                      } 
+                      : undefined}   
+                  />
                 </Form.Item>
                 <Form.Item label="Из запл.">
-                  <Input value={ticketStore.sumHoursPlan ?? '-'} />
+                  <Input 
+                    value={ticketStore.sumHoursPlan ?? '-'}
+                    type="number"
+                    onChange={editMode 
+                      ? (e) => { ticketStore.sumHoursPlan = parseInt(e.target.value)}
+                      : undefined
+                    }
+                  />
                 </Form.Item>
               </div>
             </Form>
