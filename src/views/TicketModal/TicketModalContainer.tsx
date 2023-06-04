@@ -70,7 +70,7 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
               Название: {ticketStore.name}
             </div>
             <div className="TicketModal__actions">
-              {editMode && <Button onClick={onSaveClickHandler}>Сохранить</Button>}
+              {editMode && <Button className="TicketModal__buttonSave" onClick={onSaveClickHandler}>Сохранить</Button>}
               {!editMode && <AiFillEdit onClick={() => {
                 setEditMode(true);
               }} size={16}/>}
