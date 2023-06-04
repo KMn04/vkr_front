@@ -66,6 +66,10 @@
   gap: 8px;
 }
 
+.TicketModal__buttonSave{
+  background-color: #62b0ff;
+}
+
 .TicketModal__statuses{
   display: flex;
   gap: 16px;
