@@ -10,12 +10,14 @@ export interface ICommentListItem {
 
 export interface ICreateCommentForm {
     content?: string;
+    pageId?: string
 }
 
 
 export interface ICreateCommentRequest {
     comment?: string;
-    taskId: number
+    taskId: number;
+    pageId?: string;
 }
 
 export interface IGetCommentsParams {
