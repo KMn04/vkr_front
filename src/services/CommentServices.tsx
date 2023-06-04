@@ -3,19 +3,19 @@ import { ApiConnection } from './ApiConnection';
 
 class CommentsService {
     static get RoutePrefix(): string {
-        return 'comments';
+        return 'tasks';
     }
 
     /**
      * Получение проектов с бэка
      */
     static async getComments(params: IGetCommentsParams): Promise<ICommentListItem[]> {
-        const response = await ApiConnection.get(this.RoutePrefix, {params: params});
+        const response = await ApiConnection.get(`${this.RoutePrefix}/${params.taskId}/comments`);
         return response.data;
     }
 
     static async create(request: ICreateCommentRequest): Promise<{ id: number }> {
-        const response = await ApiConnection.post(this.RoutePrefix, request)
+        const response = await ApiConnection.post(`${this.RoutePrefix}/${request.taskId}/comments`, request)
         return response.data;
     }
 }

@@ -35,4 +35,11 @@ export class ProjectWikiStore {
       this.state = new ErrorStateStore(error)
     }
   }
+
+  get options() {
+    return this.pages.map(page => ({
+      value: page.wikiPageId,
+      label: page.title
+    }))
+  }
 }

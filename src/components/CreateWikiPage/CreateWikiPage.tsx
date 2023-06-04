@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 import ProjectsService from '../../services/ProjectsServices'
 
 interface CreateWikiPageProps {
+  onSuccess: () => void,
   onClose: () => void,
   projectId: number
 }
 
-const CreateWikiPage: React.FC<CreateWikiPageProps> = ({onClose, projectId}) => {
+const CreateWikiPage: React.FC<CreateWikiPageProps> = ({onClose, projectId, onSuccess}) => {
   const [localError, setLocalError] = useState<string>()
   const handleSubmit = async (params: Required<{title: string}>) => {
     setLocalError(undefined)
@@ -15,6 +16,9 @@ const CreateWikiPage: React.FC<CreateWikiPageProps> = ({onClose, projectId}) => 
       await ProjectsService.createWikiPage(projectId, {
         title: params.title
       })
+      if(onSuccess){
+        onSuccess()
+      }
       onClose()
     }catch{
       setLocalError('Произошла ошибка подключения')

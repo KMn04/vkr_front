@@ -58,6 +58,9 @@ const WikiDirectory: React.FC<WikiDirectoryProps> = ({projectId}) => {
           <CreateWikiPage 
             onClose={closeCreateFormHandle} 
             projectId={projectWikiStore.projectId}
+            onSuccess={() => {
+              projectWikiStore.fetch()
+            }}
           />
         </Modal>
       )}

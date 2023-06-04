@@ -1,10 +1,11 @@
-import { Button, Form, Input } from "antd"
-import { useState } from "react"
+import { Button, Form, Input, Select } from "antd"
 import CommentsService from "../../services/CommentServices"
 import { ICommentListItem, ICreateCommentForm } from "../../types/Comments"
 import './styles.css'
 import dayjs from "dayjs"
 import { useForm } from "antd/es/form/Form"
+import { useStores } from "../../hooks/useStores"
+import { observer } from "mobx-react"
 
 
 export interface CommentProps {
@@ -14,6 +15,7 @@ export interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ticketId, comment, onUpdate}) => {
+    const {projectWikiStore} = useStores()
     const [form] = useForm<Required<ICreateCommentForm>>();
 
     const handleSubmit = async (params: Required<ICreateCommentForm>) => { 
@@ -22,7 +24,8 @@ const Comment: React.FC<CommentProps> = ({ticketId, comment, onUpdate}) => {
         }
         await CommentsService.create({
             comment: params.content, // текст коммента
-            taskId: ticketId
+            taskId: ticketId,
+            pageId: params.pageId
         })
         form.resetFields()
         if(onUpdate){
@@ -61,13 +64,18 @@ const Comment: React.FC<CommentProps> = ({ticketId, comment, onUpdate}) => {
             <Form
                 form={form}
                 initialValues={{
-                    content: ''
+                    content: '',
+                    pageId: undefined
                 }}
                 onFinish={handleSubmit}
                 autoComplete="off"
                 name="createComment"
                 layout='vertical'
-            >
+            >   
+                {Boolean(projectWikiStore.pages.length) && 
+                <Form.Item name="pageId" label="Страница БЗ">
+                    <Select options={projectWikiStore.options} />
+                </Form.Item>}
                 <Form.Item
                     name="content"
                     label="Новый комментарий"
@@ -85,4 +93,4 @@ const Comment: React.FC<CommentProps> = ({ticketId, comment, onUpdate}) => {
     )
 }
 
-export default Comment
+export default observer(Comment)
