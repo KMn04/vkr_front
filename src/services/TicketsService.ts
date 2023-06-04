@@ -17,6 +17,19 @@ class TicketsService {
     return response.data;
   }
 
+  static async uploadFiles(id: number, files: File[]): Promise<void> {
+    const formData = new FormData();
+    files.forEach(file => {
+      formData.append('files', file)
+    })
+    await ApiConnection.post(this.RoutePrefix + '/' + id + '/files', formData, { headers: { "Content-Type": "multipart/form-data" } })
+  }
+
+  static async getFiles(id: number): Promise<{ id: string, name: string }[]> {
+    const response = await ApiConnection.get(this.RoutePrefix + '/' + id + '/files');
+    return response.data
+  }
+
   static async delete(id: number): Promise<void> {
     await ApiConnection.delete(this.RoutePrefix + '/' + id)
   }

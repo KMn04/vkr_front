@@ -8,6 +8,7 @@ import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { Button, DatePicker, Form, Input, Popconfirm, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
+import TicketsService from '../../services/TicketsService';
 
 export interface TicketModalContainer {
   isPage?: boolean;
@@ -20,7 +21,16 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
     taskStatusesStore, usersStore
   } = useStores();
 
-  const [files, setFiles] = useState<File[]>([])
+  const updateFiles = async () => {
+    const result = await TicketsService.getFiles(+ticketId!);
+    setFiles(result)
+  }
+
+  useEffect(() => {
+    updateFiles()
+  }, [])
+
+  const [files, setFiles] = useState<{id: string, name: string}[]>([])
 
   const [editMode, setEditMode] = useState(false); 
 
@@ -28,9 +38,11 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
     acceptedFiles: File[],
     fileRejections: FileRejection[],
     event: DropEvent
-  ) => void = useCallback((acceptedFiles) => {
-    setFiles([...files, ...acceptedFiles])
-  }, [files])
+  ) => void = async (acceptedFiles) => {
+    console.log(acceptedFiles)
+    await TicketsService.uploadFiles(+ticketId!, acceptedFiles);
+    updateFiles()
+  }
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
@@ -277,7 +289,9 @@ const TicketModalContainer: React.FC<TicketModalContainer> = ({isPage}) => {
       <div className="TicketModal__files">
         <div className="TicketModal__files_table">
           {files.map(file => (
-            <div className='TicketModal__files_file'>{file.name}</div>
+            <div className='TicketModal__files_file' onClick={() => {
+              window.open('http://localhost:3000/files/'+file.id, '_blank');
+            }}>{file.name}</div>
           ))}
         </div>
         <div {...getRootProps()}>
